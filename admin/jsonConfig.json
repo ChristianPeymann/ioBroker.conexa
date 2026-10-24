@@ -1,0 +1,71 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"connection": {
+			"type": "panel",
+			"label": "Verbindungseinstellungen",
+			"items": {
+				"useIpv6": {
+					"type": "checkbox",
+					"label": "IPv6 statt IPv4 verwenden",
+					"default": false,
+					"sm": 12
+				},
+				"ipV4": {
+					"type": "text",
+					"label": "Gateway IPv4-Adresse",
+					"default": "192.168.178.8",
+					"sm": 6,
+					"hidden": "data.useIpv6 === true"
+				},
+				"ipV6": {
+					"type": "text",
+					"label": "Gateway IPv6-Adresse",
+					"default": "",
+					"sm": 6,
+					"hidden": "data.useIpv6 !== true"
+				},
+				"username": {
+					"type": "text",
+					"label": "Benutzername",
+					"default": "",
+					"sm": 6
+				},
+				"password": {
+					"type": "password",
+					"label": "Passwort",
+					"default": "",
+					"sm": 6
+				}
+			}
+		},
+		"support": {
+			"type": "panel",
+			"label": "Unterstütze das Projekt ❤️",
+			"items": {
+				"supportInfo": {
+					"type": "staticText",
+					"text": "Wenn dir dieser Adapter den Alltag erleichtert, freue ich mich über einen kleinen Kaffee! \n\n**Transparenz zu den Gebühren:**\n• **Ko-fi:** 0% Plattformgebühr (nur die üblichen Zahlungsanbieter-Gebühren fallen an).\n• **PayPal.me:** PayPal behält ca. 2,49 % + 0,35 € pro Spende für sich.",
+					"sm": 12
+				},
+				"kofiLink": {
+					"type": "staticLink",
+					"label": "☕ Spende über Ko-fi (Empfohlen)",
+					"href": "https://ko-fi.com/crypt01101111",
+					"button": true,
+					"color": "primary",
+					"sm": 6
+				},
+				"paypalLink": {
+					"type": "staticLink",
+					"label": "💸 Spende über PayPal",
+					"href": "https://paypal.me/ItMediaSolutions",
+					"button": true,
+					"color": "secondary",
+					"sm": 6
+				}
+			}
+		}
+	}
+}
