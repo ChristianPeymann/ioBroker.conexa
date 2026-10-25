@@ -138,6 +138,11 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+- (ChristianPeymann) Cleaned up news section and resolved all repository checker issues
+
 ### 0.1.4 (2026-10-25)
 
 - (ChristianPeymann) Fixed repository checker issues and resized logo to 512x512
@@ -157,7 +162,6 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 ### 0.0.1
 
 - (Christian Peymann) Initial release
-
 
 [Older changelog entries](CHANGELOG_OLD.md)
 
