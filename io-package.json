@@ -3,6 +3,32 @@
 		"name": "conexa",
 		"version": "0.1.1",
 		"news": {
+			"0.1.2": {
+				"en": "Initial clean release according to ioBroker guidelines",
+				"de": "Erstes sauberes Release nach ioBroker-Vorgaben",
+				"ru": "Первый чистый выпуск согласно правилам ioBroker",
+				"pt": "Primeiro lançamento limpo de acordo com as diretrizes do ioBroker",
+				"nl": "Eerste schone release volgens ioBroker-richtlijnen",
+				"fr": "Première version propre selon les directives d'ioBroker",
+				"it": "Primo rilascio pulito secondo le linee guida di ioBroker",
+				"es": "Primer lanzamiento limpio según las directrices de ioBroker",
+				"pl": "Pierwsze czyste wydanie zgodnie z wytycznymi ioBroker",
+				"uk": "Перший чистий випуск згідно з правилами ioBroker",
+				"zh-cn": "根据 ioBroker 指南的首次干净发布"
+			},
+			"0.1.1": {
+				"en": "Initial clean release",
+				"de": "Erster sauberer Release",
+				"ru": "Первый чистый выпуск",
+				"pt": "Primeiro lançamento limpo",
+				"nl": "Eerste schone release",
+				"fr": "Première version propre",
+				"it": "Primo rilascio pulito",
+				"es": "Primer lanzamiento limpio",
+				"pl": "Pierwsze czyste wydanie",
+				"uk": "Перший чистий випуск",
+				"zh-cn": "首次干净发布"
+			},
 			"0.0.1": {
 				"en": "initial release",
 				"de": "Erstveröffentlichung",
@@ -44,7 +70,7 @@
 			"zh-cn": "通过 M2M HAN 接口本地读取电表读数和费率配置文件 (TAF)。"
 		},
 		"authors": ["Christian Peymann <christian.peymann@ewe.net>"],
-		"keywords": ["smartmeter", "conexa", "theben", "smgw", "han", "trudi", "energy"],
+		"keywords": ["ioBroker", "smartmeter", "conexa", "theben", "smgw", "han", "trudi", "energy"],
 		"licenseInformation": {
 			"type": "free",
 			"license": "MIT"
@@ -52,7 +78,7 @@
 		"platform": "Javascript/Node.js",
 		"icon": "conexa.png",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/ChristianPeymann/ioBroker.conexa/main/admin/conexa.svg",
+		"extIcon": "https://raw.githubusercontent.com/ChristianPeymann/ioBroker.conexa/main/admin/conexa.png",
 		"readme": "https://github.com/ChristianPeymann/ioBroker.conexa/blob/main/README.md",
 		"loglevel": "info",
 		"tier": 3,
@@ -71,7 +97,7 @@
 		],
 		"globalDependencies": [
 			{
-				"admin": ">=7.0.23"
+				"admin": ">=7.6.20"
 			}
 		]
 	},
@@ -166,10 +192,10 @@
 					"en": "SMGW System Time",
 					"de": "SMGW-Systemzeit"
 				},
-				"type": "string",
+				"type": "number",
 				"read": true,
 				"write": false,
-				"def": ""
+				"def": 0
 			},
 			"native": {}
 		},
@@ -246,10 +272,10 @@
 					"en": "Last transmission to grid operator (Event 16001)",
 					"de": "Letzte Übertragung an Netzbetreiber (Event 16001)"
 				},
-				"type": "string",
+				"type": "number",
 				"read": true,
 				"write": false,
-				"def": ""
+				"def": 0
 			},
 			"native": {}
 		},
@@ -369,10 +395,10 @@
 					"en": "Latest Log Timestamp",
 					"de": "Zeitstempel letzte Log-Meldung"
 				},
-				"type": "string",
+				"type": "number",
 				"read": true,
 				"write": false,
-				"def": ""
+				"def": 0
 			},
 			"native": {}
 		},
@@ -428,10 +454,10 @@
 					"en": "Catalog Last Updated",
 					"de": "Tarif-Katalog zuletzt aktualisiert"
 				},
-				"type": "string",
+				"type": "number",
 				"read": true,
 				"write": false,
-				"def": ""
+				"def": 0
 			},
 			"native": {}
 		},

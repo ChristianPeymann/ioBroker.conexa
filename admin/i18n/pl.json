@@ -1,5 +1,13 @@
 {
 	"conexa adapter settings": "Ustawienia adaptera dla conexa",
-	"option1": "opcja 1",
-	"option2": "opcja 2"
+	"Connection settings": "Ustawienia połączenia",
+	"Use IPv6 instead of IPv4": "Używaj IPv6 zamiast IPv4",
+	"Gateway IPv4 address": "Adres IPv4 bramy",
+	"Gateway IPv6 address": "Adres IPv6 bramy",
+	"Username": "Nazwa użytkownika",
+	"Password": "Hasło",
+	"Support the project ❤️": "Wesprzyj projekt ❤️",
+	"Support information": "Jeśli ten adapter ułatwia Ci codzienne życie, będę wdzięczny za drobny datek na kawę.\n\n**Przejrzystość opłat:**\n• **Ko-fi:** 0% opłaty platformowej (obowiązują tylko standardowe opłaty dostawcy płatności).\n• **PayPal.me:** PayPal zatrzymuje około 2,49% + 0,35 € z każdej darowizny.",
+	"☕ Donate via Ko-fi (Recommended)": "☕ Przekaż darowiznę przez Ko-fi (polecane)",
+	"💸 Donate via PayPal": "💸 Przekaż darowiznę przez PayPal"
 }

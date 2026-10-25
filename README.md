@@ -7,18 +7,18 @@
 
 **Tests:** ![Test and Release](https://github.com/ChristianPeymann/ioBroker.conexa/workflows/Test%20and%20Release/badge.svg)
 
-## Unterstütze das Projekt ❤️
+## Support the project ❤️
 
-Wenn dir dieser Adapter gefällt, freue ich mich über eine kleine Unterstützung!
+If you enjoy this adapter, I would be grateful for a small contribution!
 
-_Transparenzhinweis zu den Gebühren: Bei PayPal.me gehen ca. 2,49 % + 0,35 € als Gebühr an PayPal. Ko-fi verlangt 0 % Plattformgebühr (es fallen nur die Basis-Transaktionsgebühren an)._
+_Fee transparency: PayPal.me charges approximately 2.49% + €0.35 per donation. Ko-fi charges no platform fee (only standard payment processing fees apply)._
 
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-Kaffee%20spendieren-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/crypt01101111)
-[![PayPal](https://img.shields.io/badge/PayPal-Spenden-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/ItMediaSolutions)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20me%20a%20coffee-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/crypt01101111)
+[![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/ItMediaSolutions)
 
 ## conexa adapter for ioBroker
 
-Liest Zählerstände und Tarifprofile (TAF) lokal über die M2M HAN-Schnittstelle aus.
+Reads meter readings and tariff profiles (TAF) locally via the M2M HAN interface.
 
 ## Developer manual
 
@@ -141,7 +141,11 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 
 ### **WORK IN PROGRESS**
 
-- (Christian Peymann) initial release
+### 0.1.1
+
+- (Christian Peymann) Initial clean release
+
+[Older changelog entries](CHANGELOG_OLD.md)
 
 ## License
 

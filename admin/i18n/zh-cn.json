@@ -1,5 +1,13 @@
 {
 	"conexa adapter settings": "conexa的适配器设置",
-	"option1": "选项1",
-	"option2": "选项2"
+	"Connection settings": "连接设置",
+	"Use IPv6 instead of IPv4": "使用 IPv6 而不是 IPv4",
+	"Gateway IPv4 address": "网关 IPv4 地址",
+	"Gateway IPv6 address": "网关 IPv6 地址",
+	"Username": "用户名",
+	"Password": "密码",
+	"Support the project ❤️": "支持此项目 ❤️",
+	"Support information": "如果此适配器让您的日常生活更加轻松，欢迎请我喝一杯咖啡。\n\n**费用说明：**\n• **Ko-fi：**平台费率为 0%（仅收取常规支付服务商费用）。\n• **PayPal.me：**PayPal 会从每笔捐赠中扣除约 2.49% + 0.35 欧元。",
+	"☕ Donate via Ko-fi (Recommended)": "☕ 通过 Ko-fi 捐赠（推荐）",
+	"💸 Donate via PayPal": "💸 通过 PayPal 捐赠"
 }

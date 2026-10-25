@@ -1,7 +1,7 @@
 import * as utils from "@iobroker/adapter-core";
-import * as crypto from "crypto";
-import * as https from "https";
-import { URL } from "url";
+import * as crypto from "node:crypto";
+import * as https from "node:https";
+import { URL } from "node:url";
 
 interface CachedUsagePoint {
 	usagePointId: string;
@@ -106,6 +106,24 @@ function asStateValue(value: unknown, fallback: ioBroker.StateValue = ""): ioBro
 		return value;
 	}
 	return fallback;
+}
+
+function toTimestamp(value: unknown): number | undefined {
+	if (typeof value === "number") {
+		return Number.isFinite(value) ? value : undefined;
+	}
+	if (typeof value !== "string" || value.trim() === "") {
+		return undefined;
+	}
+
+	const trimmedValue = value.trim();
+	const numericValue = Number(trimmedValue);
+	if (/^\d+(?:\.\d+)?$/.test(trimmedValue) && Number.isFinite(numericValue)) {
+		return numericValue;
+	}
+
+	const timestamp = Date.parse(trimmedValue);
+	return Number.isFinite(timestamp) ? timestamp : undefined;
 }
 
 /**
@@ -550,9 +568,7 @@ class Conexa extends utils.Adapter {
 				if (Array.isArray(parsed) && parsed.length > 0 && parsed.every(isCachedUsagePoint)) {
 					this.usagePointsCache = parsed;
 					this.cachedUsagePointMissingObis = this.usagePointsCache.some(up => !up.obis);
-					this.lastCatalogUpdate = updatedState?.val
-						? new Date(String(updatedState.val)).getTime()
-						: Date.now();
+					this.lastCatalogUpdate = toTimestamp(updatedState?.val) ?? Date.now();
 					this.log.info(`${this.usagePointsCache.length} Tarife (Usage Points) aus lokalem Cache geladen.`);
 					for (const up of this.usagePointsCache) {
 						if (!up.database) {
@@ -638,9 +654,11 @@ class Conexa extends utils.Adapter {
 			}
 		}
 
-		const nextRunIso = new Date(Date.now() + delayMs).toISOString();
-		await this.setStateAsync("gateway.nextPollTime", nextRunIso, true);
-		this.log.debug(`Nächster synchronisierter Abruf geplant für ${nextRunIso} (in ${Math.round(delayMs / 1000)}s)`);
+		const nextRunTimestamp = Date.now() + delayMs;
+		await this.setStateAsync("gateway.nextPollTime", nextRunTimestamp, true);
+		this.log.debug(
+			`Nächster synchronisierter Abruf geplant für ${new Date(nextRunTimestamp).toISOString()} (in ${Math.round(delayMs / 1000)}s)`,
+		);
 
 		this.pollTimer = this.setTimeout(async () => {
 			this.pollTimer = undefined;
@@ -692,9 +710,9 @@ class Conexa extends utils.Adapter {
 			{
 				id: "gateway.marketTransmissions.lastTimestamp",
 				name: "Letzter Übermittlungs-Zeitpunkt",
-				type: "string",
+				type: "number",
 				role: "value.time",
-				def: "",
+				def: 0,
 			},
 			{
 				id: "gateway.marketTransmissions.historyJson",
@@ -713,9 +731,9 @@ class Conexa extends utils.Adapter {
 			{
 				id: "gateway.nextPollTime",
 				name: "Nächster geplanter Abruf",
-				type: "string",
+				type: "number",
 				role: "value.time",
-				def: "",
+				def: 0,
 			},
 		];
 
@@ -748,7 +766,12 @@ class Conexa extends utils.Adapter {
 		const firmwareInfo = asGatewayRecord(info["firmware-info"]);
 		await this.setStateAsync("gateway.id", asStateValue(info["smgw-id"]), true);
 		await this.setStateAsync("gateway.state", asStateValue(info["smgw-state"]), true);
-		await this.setStateAsync("gateway.time", asStateValue(info["smgw-time"]), true);
+		const gatewayTimestamp = toTimestamp(info["smgw-time"]);
+		if (gatewayTimestamp === undefined) {
+			this.log.warn("Ungültiger Zeitstempel in smgw-info; gateway.time wurde nicht aktualisiert.");
+		} else {
+			await this.setStateAsync("gateway.time", gatewayTimestamp, true);
+		}
 		await this.setStateAsync("gateway.firmwareVersion", asStateValue(firmwareInfo?.version), true);
 		await this.setStateAsync("gateway.firmwareHash", asStateValue(firmwareInfo?.hash), true);
 		await this.setStateAsync("gateway.apiVersion", asStateValue(res.version), true);
@@ -800,7 +823,14 @@ class Conexa extends utils.Adapter {
 			if (entries.length > 0) {
 				const latest = entries[entries.length - 1];
 				await this.setStateAsync("logs.lastMessage", asStateValue(latest.message), true);
-				await this.setStateAsync("logs.lastTime", asStateValue(latest.time), true);
+				const latestTimestamp = toTimestamp(latest.time);
+				if (latestTimestamp === undefined) {
+					this.log.warn(
+						"Ungültiger Zeitstempel im neuesten Log-Eintrag; logs.lastTime wurde nicht aktualisiert.",
+					);
+				} else {
+					await this.setStateAsync("logs.lastTime", latestTimestamp, true);
+				}
 				await this.setStateAsync("logs.lastEventId", toText(latest["event-id"]), true);
 			}
 
@@ -863,14 +893,24 @@ class Conexa extends utils.Adapter {
 
 			await this.setStateAsync("gateway.marketTransmissions.totalCount", history.length, true);
 			await this.setStateAsync("gateway.marketTransmissions.todayCount", todayCount, true);
-			await this.setStateAsync("gateway.marketTransmissions.lastTimestamp", lastMarket?.time ?? "", true);
+			const lastMarketTimestamp = lastMarket ? toTimestamp(lastMarket.time) : 0;
+			if (lastMarketTimestamp === undefined) {
+				this.log.warn(
+					"Ungültiger Zeitstempel der letzten Marktübermittlung; gateway.marketTransmissions.lastTimestamp wurde nicht aktualisiert.",
+				);
+			} else {
+				await this.setStateAsync("gateway.marketTransmissions.lastTimestamp", lastMarketTimestamp, true);
+			}
 			await this.setStateAsync("gateway.marketTransmissions.historyJson", JSON.stringify(history), true);
 			if (lastMarket) {
-				await this.setStateAsync(
-					"gateway.lastMarketTransmission",
-					`${lastMarket.time} - ${lastMarket.message}`,
-					true,
-				);
+				const lastTransmissionTimestamp = toTimestamp(lastMarket.time);
+				if (lastTransmissionTimestamp === undefined) {
+					this.log.warn(
+						"Ungültiger Zeitstempel der letzten Marktübermittlung; gateway.lastMarketTransmission wurde nicht aktualisiert.",
+					);
+				} else {
+					await this.setStateAsync("gateway.lastMarketTransmission", lastTransmissionTimestamp, true);
+				}
 			}
 		} catch (error: unknown) {
 			this.log.debug(`Log-Abfrage übersprungen: ${getErrorMessage(error)}`);
@@ -981,7 +1021,7 @@ class Conexa extends utils.Adapter {
 		this.lastCatalogUpdate = Date.now();
 
 		await this.setStateAsync("usagePoints.catalogJson", JSON.stringify(discovered), true);
-		await this.setStateAsync("usagePoints.lastUpdated", new Date().toISOString(), true);
+		await this.setStateAsync("usagePoints.lastUpdated", this.lastCatalogUpdate, true);
 
 		this.log.info(`${discovered.length} Tarife erfolgreich eingelesen und im Katalog gespeichert.`);
 	}

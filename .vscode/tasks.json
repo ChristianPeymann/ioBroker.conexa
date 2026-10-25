@@ -4,7 +4,7 @@
 		{
 			"type": "shell",
 			"label": "Build and Deploy to ioBroker",
-			"command": "node bump-version.js; if ($?) { npm run build }; if ($?) { scp -r build package.json io-package.json iobroker@192.168.178.6:/opt/iobroker/node_modules/iobroker.conexa/ }",
+			"command": "npm run build; if ($?) { scp -r build package.json io-package.json iobroker@192.168.178.6:/opt/iobroker/node_modules/iobroker.conexa/ }",
 			"group": {
 				"kind": "build",
 				"isDefault": true

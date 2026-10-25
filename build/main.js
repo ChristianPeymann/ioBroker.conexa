@@ -22,9 +22,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
-var crypto = __toESM(require("crypto"));
-var https = __toESM(require("https"));
-var import_url = require("url");
+var crypto = __toESM(require("node:crypto"));
+var https = __toESM(require("node:https"));
+var import_node_url = require("node:url");
 function isGatewayRecord(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -51,6 +51,21 @@ function asStateValue(value, fallback = "") {
     return value;
   }
   return fallback;
+}
+function toTimestamp(value) {
+  if (typeof value === "number") {
+    return Number.isFinite(value) ? value : void 0;
+  }
+  if (typeof value !== "string" || value.trim() === "") {
+    return void 0;
+  }
+  const trimmedValue = value.trim();
+  const numericValue = Number(trimmedValue);
+  if (/^\d+(?:\.\d+)?$/.test(trimmedValue) && Number.isFinite(numericValue)) {
+    return numericValue;
+  }
+  const timestamp = Date.parse(trimmedValue);
+  return Number.isFinite(timestamp) ? timestamp : void 0;
 }
 function toText(value, fallback = "") {
   var _a;
@@ -159,7 +174,7 @@ class Conexa extends utils.Adapter {
     let requestStep = "Schritt 1 (Initial-Request/Challenge)";
     const method = toText(payload.method);
     try {
-      let requestUrl = new import_url.URL(this.baseUrl);
+      let requestUrl = new import_node_url.URL(this.baseUrl);
       const body = JSON.stringify(payload);
       const isRedirect = (statusCode) => [301, 302, 307, 308].includes(statusCode);
       const maxRedirects = 5;
@@ -181,7 +196,7 @@ class Conexa extends utils.Adapter {
         if (++redirectCount > maxRedirects) {
           throw new Error(`Zu viele Gateway-Redirects (mehr als ${maxRedirects}).`);
         }
-        requestUrl = new import_url.URL(response.location, requestUrl);
+        requestUrl = new import_node_url.URL(response.location, requestUrl);
         this.baseUrl = requestUrl.toString();
         response = await this.requestConexa(requestUrl, body);
         this.log.debug(`[API] Redirect-Antwort f\xFCr "${method}": Status ${response.statusCode}`);
@@ -227,7 +242,7 @@ class Conexa extends utils.Adapter {
         if (++redirectCount > maxRedirects) {
           throw new Error(`Zu viele Gateway-Redirects (mehr als ${maxRedirects}).`);
         }
-        requestUrl = new import_url.URL(authenticatedResponse.location, requestUrl);
+        requestUrl = new import_node_url.URL(authenticatedResponse.location, requestUrl);
         this.baseUrl = requestUrl.toString();
         const redirectAuthorization = this.createDigestAuthorization(response.wwwAuthenticate, requestUrl);
         authenticatedResponse = await this.requestConexa(requestUrl, body, redirectAuthorization);
@@ -406,6 +421,7 @@ class Conexa extends utils.Adapter {
    * Lädt beim Adapterstart den zwischengespeicherten Tarif-Katalog aus den ioBroker-States
    */
   async loadCatalogFromState() {
+    var _a;
     try {
       const catalogState = await this.getStateAsync("usagePoints.catalogJson");
       const updatedState = await this.getStateAsync("usagePoints.lastUpdated");
@@ -414,7 +430,7 @@ class Conexa extends utils.Adapter {
         if (Array.isArray(parsed) && parsed.length > 0 && parsed.every(isCachedUsagePoint)) {
           this.usagePointsCache = parsed;
           this.cachedUsagePointMissingObis = this.usagePointsCache.some((up) => !up.obis);
-          this.lastCatalogUpdate = (updatedState == null ? void 0 : updatedState.val) ? new Date(String(updatedState.val)).getTime() : Date.now();
+          this.lastCatalogUpdate = (_a = toTimestamp(updatedState == null ? void 0 : updatedState.val)) != null ? _a : Date.now();
           this.log.info(`${this.usagePointsCache.length} Tarife (Usage Points) aus lokalem Cache geladen.`);
           for (const up of this.usagePointsCache) {
             if (!up.database) {
@@ -486,9 +502,11 @@ class Conexa extends utils.Adapter {
         delayMs = intervalMs + correctionOffsetMs;
       }
     }
-    const nextRunIso = new Date(Date.now() + delayMs).toISOString();
-    await this.setStateAsync("gateway.nextPollTime", nextRunIso, true);
-    this.log.debug(`N\xE4chster synchronisierter Abruf geplant f\xFCr ${nextRunIso} (in ${Math.round(delayMs / 1e3)}s)`);
+    const nextRunTimestamp = Date.now() + delayMs;
+    await this.setStateAsync("gateway.nextPollTime", nextRunTimestamp, true);
+    this.log.debug(
+      `N\xE4chster synchronisierter Abruf geplant f\xFCr ${new Date(nextRunTimestamp).toISOString()} (in ${Math.round(delayMs / 1e3)}s)`
+    );
     this.pollTimer = this.setTimeout(async () => {
       this.pollTimer = void 0;
       try {
@@ -531,9 +549,9 @@ class Conexa extends utils.Adapter {
       {
         id: "gateway.marketTransmissions.lastTimestamp",
         name: "Letzter \xDCbermittlungs-Zeitpunkt",
-        type: "string",
+        type: "number",
         role: "value.time",
-        def: ""
+        def: 0
       },
       {
         id: "gateway.marketTransmissions.historyJson",
@@ -552,9 +570,9 @@ class Conexa extends utils.Adapter {
       {
         id: "gateway.nextPollTime",
         name: "N\xE4chster geplanter Abruf",
-        type: "string",
+        type: "number",
         role: "value.time",
-        def: ""
+        def: 0
       }
     ];
     for (const state of states) {
@@ -584,7 +602,12 @@ class Conexa extends utils.Adapter {
     const firmwareInfo = asGatewayRecord(info["firmware-info"]);
     await this.setStateAsync("gateway.id", asStateValue(info["smgw-id"]), true);
     await this.setStateAsync("gateway.state", asStateValue(info["smgw-state"]), true);
-    await this.setStateAsync("gateway.time", asStateValue(info["smgw-time"]), true);
+    const gatewayTimestamp = toTimestamp(info["smgw-time"]);
+    if (gatewayTimestamp === void 0) {
+      this.log.warn("Ung\xFCltiger Zeitstempel in smgw-info; gateway.time wurde nicht aktualisiert.");
+    } else {
+      await this.setStateAsync("gateway.time", gatewayTimestamp, true);
+    }
     await this.setStateAsync("gateway.firmwareVersion", asStateValue(firmwareInfo == null ? void 0 : firmwareInfo.version), true);
     await this.setStateAsync("gateway.firmwareHash", asStateValue(firmwareInfo == null ? void 0 : firmwareInfo.hash), true);
     await this.setStateAsync("gateway.apiVersion", asStateValue(res.version), true);
@@ -596,7 +619,7 @@ class Conexa extends utils.Adapter {
    * Methode 04: log (inkl. Filter für Event 16001 = Marktteilnehmer-Versand)
    */
   async pollLogs() {
-    var _a, _b;
+    var _a;
     try {
       const res = await this.sendConexaRequest({ method: "log" });
       const logObj = asGatewayRecord(res.log);
@@ -630,7 +653,14 @@ class Conexa extends utils.Adapter {
       if (entries.length > 0) {
         const latest = entries[entries.length - 1];
         await this.setStateAsync("logs.lastMessage", asStateValue(latest.message), true);
-        await this.setStateAsync("logs.lastTime", asStateValue(latest.time), true);
+        const latestTimestamp = toTimestamp(latest.time);
+        if (latestTimestamp === void 0) {
+          this.log.warn(
+            "Ung\xFCltiger Zeitstempel im neuesten Log-Eintrag; logs.lastTime wurde nicht aktualisiert."
+          );
+        } else {
+          await this.setStateAsync("logs.lastTime", latestTimestamp, true);
+        }
         await this.setStateAsync("logs.lastEventId", toText(latest["event-id"]), true);
       }
       const historyState = await this.getStateAsync("gateway.marketTransmissions.historyJson");
@@ -670,14 +700,24 @@ class Conexa extends utils.Adapter {
       }).length;
       await this.setStateAsync("gateway.marketTransmissions.totalCount", history.length, true);
       await this.setStateAsync("gateway.marketTransmissions.todayCount", todayCount, true);
-      await this.setStateAsync("gateway.marketTransmissions.lastTimestamp", (_b = lastMarket == null ? void 0 : lastMarket.time) != null ? _b : "", true);
+      const lastMarketTimestamp = lastMarket ? toTimestamp(lastMarket.time) : 0;
+      if (lastMarketTimestamp === void 0) {
+        this.log.warn(
+          "Ung\xFCltiger Zeitstempel der letzten Markt\xFCbermittlung; gateway.marketTransmissions.lastTimestamp wurde nicht aktualisiert."
+        );
+      } else {
+        await this.setStateAsync("gateway.marketTransmissions.lastTimestamp", lastMarketTimestamp, true);
+      }
       await this.setStateAsync("gateway.marketTransmissions.historyJson", JSON.stringify(history), true);
       if (lastMarket) {
-        await this.setStateAsync(
-          "gateway.lastMarketTransmission",
-          `${lastMarket.time} - ${lastMarket.message}`,
-          true
-        );
+        const lastTransmissionTimestamp = toTimestamp(lastMarket.time);
+        if (lastTransmissionTimestamp === void 0) {
+          this.log.warn(
+            "Ung\xFCltiger Zeitstempel der letzten Markt\xFCbermittlung; gateway.lastMarketTransmission wurde nicht aktualisiert."
+          );
+        } else {
+          await this.setStateAsync("gateway.lastMarketTransmission", lastTransmissionTimestamp, true);
+        }
       }
     } catch (error) {
       this.log.debug(`Log-Abfrage \xFCbersprungen: ${getErrorMessage(error)}`);
@@ -774,7 +814,7 @@ class Conexa extends utils.Adapter {
     this.usagePointsCache = discovered;
     this.lastCatalogUpdate = Date.now();
     await this.setStateAsync("usagePoints.catalogJson", JSON.stringify(discovered), true);
-    await this.setStateAsync("usagePoints.lastUpdated", (/* @__PURE__ */ new Date()).toISOString(), true);
+    await this.setStateAsync("usagePoints.lastUpdated", this.lastCatalogUpdate, true);
     this.log.info(`${discovered.length} Tarife erfolgreich eingelesen und im Katalog gespeichert.`);
   }
   /**

@@ -1,5 +1,13 @@
 {
 	"conexa adapter settings": "Налаштування адаптера для conexa",
-	"option1": "варіант1",
-	"option2": "варіант2"
+	"Connection settings": "Налаштування з'єднання",
+	"Use IPv6 instead of IPv4": "Використовувати IPv6 замість IPv4",
+	"Gateway IPv4 address": "IPv4-адреса шлюзу",
+	"Gateway IPv6 address": "IPv6-адреса шлюзу",
+	"Username": "Ім'я користувача",
+	"Password": "Пароль",
+	"Support the project ❤️": "Підтримати проєкт ❤️",
+	"Support information": "Якщо цей адаптер полегшує ваше повсякденне життя, буду вдячний за невеликий внесок на каву.\n\n**Інформація про комісії:**\n• **Ko-fi:** комісія платформи 0% (стягуються лише звичайні комісії платіжного провайдера).\n• **PayPal.me:** PayPal утримує приблизно 2,49% + 0,35 € з кожної пожертви.",
+	"☕ Donate via Ko-fi (Recommended)": "☕ Підтримати через Ko-fi (рекомендовано)",
+	"💸 Donate via PayPal": "💸 Підтримати через PayPal"
 }

@@ -1,5 +1,13 @@
 {
 	"conexa adapter settings": "Impostazioni dell'adattatore per conexa",
-	"option1": "opzione1",
-	"option2": "opzione2"
+	"Connection settings": "Impostazioni di connessione",
+	"Use IPv6 instead of IPv4": "Usa IPv6 invece di IPv4",
+	"Gateway IPv4 address": "Indirizzo IPv4 del gateway",
+	"Gateway IPv6 address": "Indirizzo IPv6 del gateway",
+	"Username": "Nome utente",
+	"Password": "Password",
+	"Support the project ❤️": "Sostieni il progetto ❤️",
+	"Support information": "Se questo adattatore ti semplifica la vita quotidiana, apprezzerei un piccolo contributo per un caffè.\n\n**Trasparenza sulle commissioni:**\n• **Ko-fi:** 0% di commissioni di piattaforma (si applicano solo le normali commissioni del provider di pagamento).\n• **PayPal.me:** PayPal trattiene circa il 2,49% + 0,35 € da ogni donazione.",
+	"☕ Donate via Ko-fi (Recommended)": "☕ Dona tramite Ko-fi (consigliato)",
+	"💸 Donate via PayPal": "💸 Dona tramite PayPal"
 }
