@@ -138,8 +138,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.1.3 (2026-10-25)
 
 - (ChristianPeymann) Optimized adapter icon size
 
@@ -154,6 +153,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 ### 0.0.1
 
 - (Christian Peymann) Initial release
+
 
 [Older changelog entries](CHANGELOG_OLD.md)
 

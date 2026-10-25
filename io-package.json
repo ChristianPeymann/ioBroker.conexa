@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "conexa",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "news": {
+      "0.1.3": {
+        "en": "Optimized adapter icon size",
+        "de": "Optimierte Adapter-Symbolgröße",
+        "ru": "Оптимизированный размер значка адаптера",
+        "pt": "Ícone de adaptador otimizado",
+        "nl": "Geoptimaliseerde grootte van het adapterpictogram",
+        "fr": "Taille d'icône optimisée",
+        "it": "Icona adattatore ottimizzata",
+        "es": "Tamaño de icono de adaptador",
+        "pl": "Zoptymalizowany rozmiar ikony adaptera",
+        "uk": "Оптимізований розмір значка адаптера",
+        "zh-cn": "优化了适配器图标大小"
+      },
       "0.1.2": {
         "en": "Initial clean release according to ioBroker guidelines",
         "de": "Erstes sauberes Release nach ioBroker-Vorgaben",
