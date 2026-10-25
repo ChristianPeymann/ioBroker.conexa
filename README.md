@@ -138,8 +138,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.1.5 (2026-10-25)
 
 - (ChristianPeymann) Cleaned up news section and resolved all repository checker issues
 
@@ -158,10 +157,6 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 ### 0.1.1
 
 - (Christian Peymann) Initial clean release
-
-### 0.0.1
-
-- (Christian Peymann) Initial release
 
 [Older changelog entries](CHANGELOG_OLD.md)
 
