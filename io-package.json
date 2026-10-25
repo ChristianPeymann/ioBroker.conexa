@@ -1,522 +1,481 @@
 {
-  "common": {
-    "name": "conexa",
-    "version": "0.1.4",
-    "news": {
-      "0.1.4": {
-        "en": "Fixed repository checker issues and resized logo to 512x512",
-        "de": "Repository-Checker behoben und Logo auf 512 x 512 geändert",
-        "ru": "Исправлены проблемы с проверкой репозитория и изменен размер логотипа до 512x512",
-        "pt": "Correção de erros no repositório e redimensionou o logotipo para 512x512",
-        "nl": "Problemen met de controle van de repository opgelost en het logo aangepast naar 512 x 512",
-        "fr": "Correction de problèmes de dépôt et redimensionnement du logo en 512 x 512",
-        "it": "Risolti problemi con Repository Checker e logo ridimensionato a 512x512",
-        "es": "Se corrigieron problemas con el comprobador de repositorios y se redimensionó el logo a 512 x 512",
-        "pl": "Naprawiono problemy z sprawdzaniem repozytorium i zmieniono rozmiar logo do 512x512",
-        "uk": "Виправлені проблеми перевірки сховища та змінений розмір логотипу до 512x512",
-        "zh-cn": "修复了存储库检查器问题并将徽标大小调整为 512x512"
-      },
-      "0.1.3": {
-        "en": "Optimized adapter icon size",
-        "de": "Optimierte Adapter-Symbolgröße",
-        "ru": "Оптимизированный размер значка адаптера",
-        "pt": "Ícone de adaptador otimizado",
-        "nl": "Geoptimaliseerde grootte van het adapterpictogram",
-        "fr": "Taille d'icône optimisée",
-        "it": "Icona adattatore ottimizzata",
-        "es": "Tamaño de icono de adaptador",
-        "pl": "Zoptymalizowany rozmiar ikony adaptera",
-        "uk": "Оптимізований розмір значка адаптера",
-        "zh-cn": "优化了适配器图标大小"
-      },
-      "0.1.2": {
-        "en": "Initial clean release according to ioBroker guidelines",
-        "de": "Erstes sauberes Release nach ioBroker-Vorgaben",
-        "ru": "Первый чистый выпуск согласно правилам ioBroker",
-        "pt": "Primeiro lançamento limpo de acordo com as diretrizes do ioBroker",
-        "nl": "Eerste schone release volgens ioBroker-richtlijnen",
-        "fr": "Première version propre selon les directives d'ioBroker",
-        "it": "Primo rilascio pulito secondo le linee guida di ioBroker",
-        "es": "Primer lanzamiento limpio según las directrices de ioBroker",
-        "pl": "Pierwsze czyste wydanie zgodnie z wytycznymi ioBroker",
-        "uk": "Перший чистий випуск згідно з правилами ioBroker",
-        "zh-cn": "根据 ioBroker 指南的首次干净发布"
-      },
-      "0.1.1": {
-        "en": "Initial clean release",
-        "de": "Erster sauberer Release",
-        "ru": "Первый чистый выпуск",
-        "pt": "Primeiro lançamento limpo",
-        "nl": "Eerste schone release",
-        "fr": "Première version propre",
-        "it": "Primo rilascio pulito",
-        "es": "Primer lanzamiento limpio",
-        "pl": "Pierwsze czyste wydanie",
-        "uk": "Перший чистий випуск",
-        "zh-cn": "首次干净发布"
-      },
-      "0.0.1": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Начальная версия",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "uk": "Початкова версія",
-        "zh-cn": "首次出版"
-      }
-    },
-    "titleLang": {
-      "en": "Theben CONEXA 3.0 Smart Meter Gateway",
-      "de": "Theben CONEXA 3.0 Smart Meter Gateway",
-      "ru": "Шлюз интеллектуальных счетчиков Theben CONEXA 3.0",
-      "pt": "Gateway de medidor inteligente Theben CONEXA 3.0",
-      "nl": "Theben CONEXA 3.0 slimme metergateway",
-      "fr": "Passerelle de compteur intelligent Theben CONEXA 3.0",
-      "it": "Gateway per contatori intelligenti CONEXA 3.0 di Theben",
-      "es": "Pasarela de contador inteligente CONEXA 3.0 de Theben",
-      "pl": "Inteligentna bramka licznikowa Theben CONEXA 3.0",
-      "uk": "Theben CONEXA 3.0 Smart Meter Gateway",
-      "zh-cn": "Theben CONEXA 3.0 智能电表网关"
-    },
-    "desc": {
-      "en": "Reads meter readings and tariff profiles (TAF) locally via the M2M HAN interface.",
-      "de": "Liest Zählerstände und Tarifprofile (TAF) lokal über die M2M HAN-Schnittstelle aus.",
-      "ru": "Считывает показания счетчиков и тарифные профили (TAF) локально через интерфейс M2M HAN.",
-      "pt": "Lê leituras de contadores e perfis tarifários (TAF) localmente através da interface M2M HAN.",
-      "nl": "Leest meterstanden en tariefprofielen (TAF) lokaal uit via de M2M HAN-interface.",
-      "fr": "Lit les relevés de compteurs et les profils tarifaires (TAF) localement via l'interface M2M HAN.",
-      "it": "Legge le letture dei contatori e i profili tariffari (TAF) localmente tramite l'interfaccia M2M HAN.",
-      "es": "Lee lecturas de contadores y perfiles de tarifas (TAF) localmente a través de la interfaz M2M HAN.",
-      "pl": "Odczytuje odczyty liczników i profile taryfowe (TAF) lokalnie przez interfejs M2M HAN.",
-      "uk": "Зчитує показання лічильників та тарифні профілі (TAF) локально через інтерфейс M2M HAN.",
-      "zh-cn": "通过 M2M HAN 接口本地读取电表读数和费率配置文件 (TAF)。"
-    },
-    "authors": [
-      "Christian Peymann <christian.peymann@ewe.net>"
-    ],
-    "keywords": [
-      "ioBroker",
-      "smartmeter",
-      "conexa",
-      "theben",
-      "smgw",
-      "han",
-      "trudi",
-      "energy"
-    ],
-    "licenseInformation": {
-      "type": "free",
-      "license": "MIT"
-    },
-    "platform": "Javascript/Node.js",
-    "icon": "conexa.png",
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/ChristianPeymann/ioBroker.conexa/main/admin/conexa.png",
-    "readme": "https://github.com/ChristianPeymann/ioBroker.conexa/blob/main/README.md",
-    "loglevel": "info",
-    "tier": 3,
-    "mode": "daemon",
-    "type": "energy",
-    "compact": true,
-    "connectionType": "local",
-    "dataSource": "poll",
-    "adminUI": {
-      "config": "json"
-    },
-    "dependencies": [
-      {
-        "js-controller": ">=6.0.11"
-      }
-    ],
-    "globalDependencies": [
-      {
-        "admin": ">=7.6.20"
-      }
-    ]
-  },
-  "encryptedNative": [
-    "password"
-  ],
-  "protectedNative": [
-    "password"
-  ],
-  "native": {
-    "useIpv6": false,
-    "ipV4": "192.168.178.8",
-    "ipV6": "",
-    "username": "",
-    "password": "",
-    "pollInterval": 15
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "info",
-      "type": "channel",
-      "common": {
-        "name": {
-          "en": "Information",
-          "de": "Informationen"
-        }
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.connection",
-      "type": "state",
-      "common": {
-        "role": "indicator.connected",
-        "name": {
-          "en": "Device or service connected",
-          "de": "Gerät oder Dienst verbunden"
-        },
-        "type": "boolean",
-        "read": true,
-        "write": false,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway",
-      "type": "channel",
-      "common": {
-        "name": {
-          "en": "Smart Meter Gateway Info & Control",
-          "de": "Smart Meter Gateway Info & Steuerung"
-        }
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.id",
-      "type": "state",
-      "common": {
-        "role": "info.serial",
-        "name": {
-          "en": "SMGW ID",
-          "de": "SMGW-ID"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.state",
-      "type": "state",
-      "common": {
-        "role": "info.status",
-        "name": {
-          "en": "SMGW State (Hex)",
-          "de": "SMGW-Status (Hex)"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.time",
-      "type": "state",
-      "common": {
-        "role": "value.time",
-        "name": {
-          "en": "SMGW System Time",
-          "de": "SMGW-Systemzeit"
-        },
-        "type": "number",
-        "read": true,
-        "write": false,
-        "def": 0
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.firmwareVersion",
-      "type": "state",
-      "common": {
-        "role": "info.firmware",
-        "name": {
-          "en": "Firmware Version",
-          "de": "Firmware-Version"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.firmwareHash",
-      "type": "state",
-      "common": {
-        "role": "text",
-        "name": {
-          "en": "Firmware Hash",
-          "de": "Firmware-Hash"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.apiVersion",
-      "type": "state",
-      "common": {
-        "role": "text",
-        "name": {
-          "en": "API Version",
-          "de": "API-Version"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.certificatesJson",
-      "type": "state",
-      "common": {
-        "role": "json",
-        "name": {
-          "en": "Certificates (HAN & WAN JSON)",
-          "de": "Zertifikate (HAN & WAN JSON)"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": "{}"
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.lastMarketTransmission",
-      "type": "state",
-      "common": {
-        "role": "value.time",
-        "name": {
-          "en": "Last transmission to grid operator (Event 16001)",
-          "de": "Letzte Übertragung an Netzbetreiber (Event 16001)"
-        },
-        "type": "number",
-        "read": true,
-        "write": false,
-        "def": 0
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.triggerSelfTest",
-      "type": "state",
-      "common": {
-        "role": "button",
-        "name": {
-          "en": "Trigger Self-Test",
-          "de": "Selbsttest starten"
-        },
-        "type": "boolean",
-        "read": false,
-        "write": true,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.selfTestResult",
-      "type": "state",
-      "common": {
-        "role": "text",
-        "name": {
-          "en": "Self-Test Result Code",
-          "de": "Selbsttest Ergebnis-Code"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "gateway.selfTestDescription",
-      "type": "state",
-      "common": {
-        "role": "text",
-        "name": {
-          "en": "Self-Test Description",
-          "de": "Selbsttest Beschreibung"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "logs",
-      "type": "channel",
-      "common": {
-        "name": {
-          "en": "Gateway Logs",
-          "de": "Gateway-Logbuch"
-        }
-      },
-      "native": {}
-    },
-    {
-      "_id": "logs.recordsCount",
-      "type": "state",
-      "common": {
-        "role": "value",
-        "name": {
-          "en": "Number of Log Entries",
-          "de": "Anzahl der Log-Einträge"
-        },
-        "type": "number",
-        "read": true,
-        "write": false,
-        "def": 0
-      },
-      "native": {}
-    },
-    {
-      "_id": "logs.entriesJson",
-      "type": "state",
-      "common": {
-        "role": "json",
-        "name": {
-          "en": "Log Entries (JSON)",
-          "de": "Log-Einträge (JSON)"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": "[]"
-      },
-      "native": {}
-    },
-    {
-      "_id": "logs.lastMessage",
-      "type": "state",
-      "common": {
-        "role": "text",
-        "name": {
-          "en": "Latest Log Message",
-          "de": "Letzte Log-Meldung"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "logs.lastTime",
-      "type": "state",
-      "common": {
-        "role": "value.time",
-        "name": {
-          "en": "Latest Log Timestamp",
-          "de": "Zeitstempel letzte Log-Meldung"
-        },
-        "type": "number",
-        "read": true,
-        "write": false,
-        "def": 0
-      },
-      "native": {}
-    },
-    {
-      "_id": "logs.lastEventId",
-      "type": "state",
-      "common": {
-        "role": "text",
-        "name": {
-          "en": "Latest Log Event ID",
-          "de": "Letzte Log Event-ID"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "usagePoints",
-      "type": "channel",
-      "common": {
-        "name": {
-          "en": "Usage Points (Tariffs)",
-          "de": "Messlokationen / Tarife (Usage Points)"
-        }
-      },
-      "native": {}
-    },
-    {
-      "_id": "usagePoints.catalogJson",
-      "type": "state",
-      "common": {
-        "role": "json",
-        "name": {
-          "en": "Cached Usage Points Configuration (JSON)",
-          "de": "Gespeicherte Tarif-Konfiguration (JSON-Cache)"
-        },
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": "[]"
-      },
-      "native": {}
-    },
-    {
-      "_id": "usagePoints.lastUpdated",
-      "type": "state",
-      "common": {
-        "role": "value.time",
-        "name": {
-          "en": "Catalog Last Updated",
-          "de": "Tarif-Katalog zuletzt aktualisiert"
-        },
-        "type": "number",
-        "read": true,
-        "write": false,
-        "def": 0
-      },
-      "native": {}
-    },
-    {
-      "_id": "usagePoints.refreshCatalog",
-      "type": "state",
-      "common": {
-        "role": "button",
-        "name": {
-          "en": "Scan for new tariffs / Refresh catalog",
-          "de": "Neue Tarife suchen / Katalog neu einlesen"
-        },
-        "type": "boolean",
-        "read": false,
-        "write": true,
-        "def": false
-      },
-      "native": {}
-    }
-  ]
+	"common": {
+		"name": "conexa",
+		"version": "0.1.4",
+		"news": {
+			"0.1.4": {
+				"en": "Fixed repository checker issues and resized logo to 512x512",
+				"de": "Repository-Checker behoben und Logo auf 512 x 512 geändert",
+				"ru": "Исправлены проблемы с проверкой репозитория и изменен размер логотипа до 512x512",
+				"pt": "Correção de erros no repositório e redimensionou o logotipo para 512x512",
+				"nl": "Problemen met de controle van de repository opgelost en het logo aangepast naar 512 x 512",
+				"fr": "Correction de problèmes de dépôt et redimensionnement du logo en 512 x 512",
+				"it": "Risolti problemi con Repository Checker e logo ridimensionato a 512x512",
+				"es": "Se corrigieron problemas con el comprobador de repositorios y se redimensionó el logo a 512 x 512",
+				"pl": "Naprawiono problemy z sprawdzaniem repozytorium i zmieniono rozmiar logo do 512x512",
+				"uk": "Виправлені проблеми перевірки сховища та змінений розмір логотипу до 512x512",
+				"zh-cn": "修复了存储库检查器问题并将徽标大小调整为 512x512"
+			},
+			"0.1.3": {
+				"en": "Optimized adapter icon size",
+				"de": "Optimierte Adapter-Symbolgröße",
+				"ru": "Оптимизированный размер значка адаптера",
+				"pt": "Ícone de adaptador otimizado",
+				"nl": "Geoptimaliseerde grootte van het adapterpictogram",
+				"fr": "Taille d'icône optimisée",
+				"it": "Icona adattatore ottimizzata",
+				"es": "Tamaño de icono de adaptador",
+				"pl": "Zoptymalizowany rozmiar ikony adaptera",
+				"uk": "Оптимізований розмір значка адаптера",
+				"zh-cn": "优化了适配器图标大小"
+			},
+			"0.1.2": {
+				"en": "Initial clean release according to ioBroker guidelines",
+				"de": "Erstes sauberes Release nach ioBroker-Vorgaben",
+				"ru": "Первый чистый выпуск согласно правилам ioBroker",
+				"pt": "Primeiro lançamento limpo de acordo com as diretrizes do ioBroker",
+				"nl": "Eerste schone release volgens ioBroker-richtlijnen",
+				"fr": "Première version propre selon les directives d'ioBroker",
+				"it": "Primo rilascio pulito secondo le linee guida di ioBroker",
+				"es": "Primer lanzamiento limpio según las directrices de ioBroker",
+				"pl": "Pierwsze czyste wydanie zgodnie z wytycznymi ioBroker",
+				"uk": "Перший чистий випуск згідно з правилами ioBroker",
+				"zh-cn": "根据 ioBroker 指南的首次干净发布"
+			}
+		},
+		"titleLang": {
+			"en": "Theben CONEXA 3.0 Smart Meter Gateway",
+			"de": "Theben CONEXA 3.0 Smart Meter Gateway",
+			"ru": "Шлюз интеллектуальных счетчиков Theben CONEXA 3.0",
+			"pt": "Gateway de medidor inteligente Theben CONEXA 3.0",
+			"nl": "Theben CONEXA 3.0 slimme metergateway",
+			"fr": "Passerelle de compteur intelligent Theben CONEXA 3.0",
+			"it": "Gateway per contatori intelligenti CONEXA 3.0 di Theben",
+			"es": "Pasarela de contador inteligente CONEXA 3.0 de Theben",
+			"pl": "Inteligentna bramka licznikowa Theben CONEXA 3.0",
+			"uk": "Theben CONEXA 3.0 Smart Meter Gateway",
+			"zh-cn": "Theben CONEXA 3.0 智能电表网关"
+		},
+		"desc": {
+			"en": "Reads meter readings and tariff profiles (TAF) locally via the M2M HAN interface.",
+			"de": "Liest Zählerstände und Tarifprofile (TAF) lokal über die M2M HAN-Schnittstelle aus.",
+			"ru": "Считывает показания счетчиков и тарифные профили (TAF) локально через интерфейс M2M HAN.",
+			"pt": "Lê leituras de contadores e perfis tarifários (TAF) localmente através da interface M2M HAN.",
+			"nl": "Leest meterstanden en tariefprofielen (TAF) lokaal uit via de M2M HAN-interface.",
+			"fr": "Lit les relevés de compteurs et les profils tarifaires (TAF) localement via l'interface M2M HAN.",
+			"it": "Legge le letture dei contatori e i profili tariffari (TAF) localmente tramite l'interfaccia M2M HAN.",
+			"es": "Lee lecturas de contadores y perfiles de tarifas (TAF) localmente a través de la interfaz M2M HAN.",
+			"pl": "Odczytuje odczyty liczników i profile taryfowe (TAF) lokalnie przez interfejs M2M HAN.",
+			"uk": "Зчитує показання лічильників та тарифні профілі (TAF) локально через інтерфейс M2M HAN.",
+			"zh-cn": "通过 M2M HAN 接口本地读取电表读数和费率配置文件 (TAF)。"
+		},
+		"authors": ["Christian Peymann <christian.peymann@ewe.net>"],
+		"keywords": ["smartmeter", "conexa", "theben", "smgw", "han", "trudi", "energy"],
+		"licenseInformation": {
+			"type": "free",
+			"license": "MIT"
+		},
+		"platform": "Javascript/Node.js",
+		"icon": "conexa.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/ChristianPeymann/ioBroker.conexa/main/admin/conexa.png",
+		"readme": "https://github.com/ChristianPeymann/ioBroker.conexa/blob/main/README.md",
+		"loglevel": "info",
+		"tier": 3,
+		"mode": "daemon",
+		"type": "energy",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "poll",
+		"adminUI": {
+			"config": "json"
+		},
+		"dependencies": [
+			{
+				"js-controller": ">=6.0.11"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=7.6.20"
+			}
+		]
+	},
+	"encryptedNative": ["password"],
+	"protectedNative": ["password"],
+	"native": {
+		"useIpv6": false,
+		"ipV4": "192.168.178.8",
+		"ipV6": "",
+		"username": "",
+		"password": "",
+		"pollInterval": 15
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": {
+					"en": "Information",
+					"de": "Informationen"
+				}
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": {
+					"en": "Device or service connected",
+					"de": "Gerät oder Dienst verbunden"
+				},
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway",
+			"type": "channel",
+			"common": {
+				"name": {
+					"en": "Smart Meter Gateway Info & Control",
+					"de": "Smart Meter Gateway Info & Steuerung"
+				}
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.id",
+			"type": "state",
+			"common": {
+				"role": "info.serial",
+				"name": {
+					"en": "SMGW ID",
+					"de": "SMGW-ID"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.state",
+			"type": "state",
+			"common": {
+				"role": "info.status",
+				"name": {
+					"en": "SMGW State (Hex)",
+					"de": "SMGW-Status (Hex)"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.time",
+			"type": "state",
+			"common": {
+				"role": "value.time",
+				"name": {
+					"en": "SMGW System Time",
+					"de": "SMGW-Systemzeit"
+				},
+				"type": "number",
+				"read": true,
+				"write": false,
+				"def": 0
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.firmwareVersion",
+			"type": "state",
+			"common": {
+				"role": "info.firmware",
+				"name": {
+					"en": "Firmware Version",
+					"de": "Firmware-Version"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.firmwareHash",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": {
+					"en": "Firmware Hash",
+					"de": "Firmware-Hash"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.apiVersion",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": {
+					"en": "API Version",
+					"de": "API-Version"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.certificatesJson",
+			"type": "state",
+			"common": {
+				"role": "json",
+				"name": {
+					"en": "Certificates (HAN & WAN JSON)",
+					"de": "Zertifikate (HAN & WAN JSON)"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": "{}"
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.lastMarketTransmission",
+			"type": "state",
+			"common": {
+				"role": "value.time",
+				"name": {
+					"en": "Last transmission to grid operator (Event 16001)",
+					"de": "Letzte Übertragung an Netzbetreiber (Event 16001)"
+				},
+				"type": "number",
+				"read": true,
+				"write": false,
+				"def": 0
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.triggerSelfTest",
+			"type": "state",
+			"common": {
+				"role": "button",
+				"name": {
+					"en": "Trigger Self-Test",
+					"de": "Selbsttest starten"
+				},
+				"type": "boolean",
+				"read": false,
+				"write": true,
+				"def": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.selfTestResult",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": {
+					"en": "Self-Test Result Code",
+					"de": "Selbsttest Ergebnis-Code"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		},
+		{
+			"_id": "gateway.selfTestDescription",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": {
+					"en": "Self-Test Description",
+					"de": "Selbsttest Beschreibung"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		},
+		{
+			"_id": "logs",
+			"type": "channel",
+			"common": {
+				"name": {
+					"en": "Gateway Logs",
+					"de": "Gateway-Logbuch"
+				}
+			},
+			"native": {}
+		},
+		{
+			"_id": "logs.recordsCount",
+			"type": "state",
+			"common": {
+				"role": "value",
+				"name": {
+					"en": "Number of Log Entries",
+					"de": "Anzahl der Log-Einträge"
+				},
+				"type": "number",
+				"read": true,
+				"write": false,
+				"def": 0
+			},
+			"native": {}
+		},
+		{
+			"_id": "logs.entriesJson",
+			"type": "state",
+			"common": {
+				"role": "json",
+				"name": {
+					"en": "Log Entries (JSON)",
+					"de": "Log-Einträge (JSON)"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": "[]"
+			},
+			"native": {}
+		},
+		{
+			"_id": "logs.lastMessage",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": {
+					"en": "Latest Log Message",
+					"de": "Letzte Log-Meldung"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		},
+		{
+			"_id": "logs.lastTime",
+			"type": "state",
+			"common": {
+				"role": "value.time",
+				"name": {
+					"en": "Latest Log Timestamp",
+					"de": "Zeitstempel letzte Log-Meldung"
+				},
+				"type": "number",
+				"read": true,
+				"write": false,
+				"def": 0
+			},
+			"native": {}
+		},
+		{
+			"_id": "logs.lastEventId",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": {
+					"en": "Latest Log Event ID",
+					"de": "Letzte Log Event-ID"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		},
+		{
+			"_id": "usagePoints",
+			"type": "channel",
+			"common": {
+				"name": {
+					"en": "Usage Points (Tariffs)",
+					"de": "Messlokationen / Tarife (Usage Points)"
+				}
+			},
+			"native": {}
+		},
+		{
+			"_id": "usagePoints.catalogJson",
+			"type": "state",
+			"common": {
+				"role": "json",
+				"name": {
+					"en": "Cached Usage Points Configuration (JSON)",
+					"de": "Gespeicherte Tarif-Konfiguration (JSON-Cache)"
+				},
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": "[]"
+			},
+			"native": {}
+		},
+		{
+			"_id": "usagePoints.lastUpdated",
+			"type": "state",
+			"common": {
+				"role": "value.time",
+				"name": {
+					"en": "Catalog Last Updated",
+					"de": "Tarif-Katalog zuletzt aktualisiert"
+				},
+				"type": "number",
+				"read": true,
+				"write": false,
+				"def": 0
+			},
+			"native": {}
+		},
+		{
+			"_id": "usagePoints.refreshCatalog",
+			"type": "state",
+			"common": {
+				"role": "button",
+				"name": {
+					"en": "Scan for new tariffs / Refresh catalog",
+					"de": "Neue Tarife suchen / Katalog neu einlesen"
+				},
+				"type": "boolean",
+				"read": false,
+				"write": true,
+				"def": false
+			},
+			"native": {}
+		}
+	]
 }
