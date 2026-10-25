@@ -141,6 +141,8 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 
 ### **WORK IN PROGRESS**
 
+- (ChristianPeymann) Resolved issues detected by repository checker (#1)
+
 ### 0.1.1
 
 - (Christian Peymann) Initial clean release
