@@ -138,7 +138,12 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
 ### **WORK IN PROGRESS**
+
+### **WORK IN PROGRESS**
+
+- (ChristianPeymann) Updated required Node.js version to >= 24
 
 ### 0.1.5 (2026-10-25)
 
