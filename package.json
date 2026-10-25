@@ -67,6 +67,7 @@
     "lint": "eslint -c eslint.config.mjs .",
     "translate": "translate-adapter",
     "release": "release-script",
+    "release:all": "git add -A && git diff-index --quiet HEAD || git commit -m \"chore: auto-commit before release\" && npm run release",
     "dev-server": "dev-server"
   },
   "bugs": {
