@@ -2,7 +2,6 @@
 .*/
 !.vscode/
 !.github/
-build/
 
 *.code-workspace
 node_modules
