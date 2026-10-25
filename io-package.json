@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "conexa",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "news": {
+      "0.1.4": {
+        "en": "Fixed repository checker issues and resized logo to 512x512",
+        "de": "Repository-Checker behoben und Logo auf 512 x 512 geändert",
+        "ru": "Исправлены проблемы с проверкой репозитория и изменен размер логотипа до 512x512",
+        "pt": "Correção de erros no repositório e redimensionou o logotipo para 512x512",
+        "nl": "Problemen met de controle van de repository opgelost en het logo aangepast naar 512 x 512",
+        "fr": "Correction de problèmes de dépôt et redimensionnement du logo en 512 x 512",
+        "it": "Risolti problemi con Repository Checker e logo ridimensionato a 512x512",
+        "es": "Se corrigieron problemas con el comprobador de repositorios y se redimensionó el logo a 512 x 512",
+        "pl": "Naprawiono problemy z sprawdzaniem repozytorium i zmieniono rozmiar logo do 512x512",
+        "uk": "Виправлені проблеми перевірки сховища та змінений розмір логотипу до 512x512",
+        "zh-cn": "修复了存储库检查器问题并将徽标大小调整为 512x512"
+      },
       "0.1.3": {
         "en": "Optimized adapter icon size",
         "de": "Optimierte Adapter-Symbolgröße",
