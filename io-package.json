@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "conexa",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "news": {
+      "0.1.9": {
+        "en": "Adjusted minimum Node.js version to 22",
+        "de": "Mindestversion von Node.js auf 22 angepasst",
+        "ru": "Минимальная версия Node.js скорректирована до 22",
+        "pt": "Versão mínima do Node.js ajustada a 22",
+        "nl": "Minimale versie van Node.js aangepast naar 22",
+        "fr": "Version minimale de Node.js ajustée à 22",
+        "it": "Versione minima di Node.js a 22",
+        "es": "Se ajustó la versión mínima de Node.js a 22",
+        "pl": "Dostosowano minimalną wersję Node.js do 22",
+        "uk": "Скоригована мінімальна версія Node.js до 22",
+        "zh-cn": "将 Node.js 的最低版本调整为 22"
+      },
       "0.1.8": {
         "en": "Fixed state roles and added missing translations for object definitions",
         "de": "Statusrollen und fehlende Übersetzungen für Objektdefinitionen",
@@ -80,19 +93,6 @@
         "pl": "Zoptymalizowany rozmiar ikony adaptera",
         "uk": "Оптимізований розмір значка адаптера",
         "zh-cn": "优化了适配器图标大小"
-      },
-      "0.1.2": {
-        "en": "Initial clean release according to ioBroker guidelines",
-        "de": "Erstes sauberes Release nach ioBroker-Vorgaben",
-        "ru": "Первый чистый выпуск согласно правилам ioBroker",
-        "pt": "Primeiro lançamento limpo de acordo com as diretrizes do ioBroker",
-        "nl": "Eerste schone release volgens ioBroker-richtlijnen",
-        "fr": "Première version propre selon les directives d'ioBroker",
-        "it": "Primo rilascio pulito secondo le linee guida di ioBroker",
-        "es": "Primer lanzamiento limpio según las directrices de ioBroker",
-        "pl": "Pierwsze czyste wydanie zgodnie z wytycznymi ioBroker",
-        "uk": "Перший чистий випуск згідно з правилами ioBroker",
-        "zh-cn": "根据 ioBroker 指南的首次干净发布"
       }
     },
     "titleLang": {

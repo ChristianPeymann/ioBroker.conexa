@@ -1,6 +1,6 @@
 {
   "name": "iobroker.conexa",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Liest Zählerstände und Tarifprofile (TAF) lokal über die M2M HAN-Schnittstelle aus.",
   "author": {
     "name": "Christian Peymann",
