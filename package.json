@@ -21,7 +21,7 @@
     "url": "https://github.com/ChristianPeymann/ioBroker.conexa.git"
   },
   "engines": {
-    "node": ">=24"
+    "node": ">=22"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.4.3"
