@@ -138,8 +138,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.1.6 (2026-10-26)
 
 - (ChristianPeymann) Updated required Node.js version to >= 24
 
@@ -158,10 +157,6 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 ### 0.1.2 (2026-10-25)
 
 - (ChristianPeymann) Resolved issues detected by repository checker (#1)
-
-### 0.1.1
-
-- (Christian Peymann) Initial clean release
 
 [Older changelog entries](CHANGELOG_OLD.md)
 
