@@ -138,7 +138,10 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
 ### **WORK IN PROGRESS**
+
+- (ChristianPeymann) Adjusted minimum Node.js version to 22
 
 ### 0.1.8 (2026-10-26)
 
@@ -161,7 +164,6 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 ### 0.1.3 (2026-10-25)
 
 - (ChristianPeymann) Optimized adapter icon size
-
 
 [Older changelog entries](CHANGELOG_OLD.md)
 
