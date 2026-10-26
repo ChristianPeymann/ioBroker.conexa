@@ -1105,7 +1105,7 @@ class Conexa extends utils.Adapter {
 			common: {
 				name: "Verbrauch letztes Intervall (Wh)",
 				type: "number",
-				role: "value.energy.consumption",
+				role: "value.energy",
 				unit: "Wh",
 				read: true,
 				write: false,
@@ -1131,7 +1131,7 @@ class Conexa extends utils.Adapter {
 			common: {
 				name: "Zeitpunkt der Erfassung",
 				type: "string",
-				role: "value.time",
+				role: "date",
 				read: true,
 				write: false,
 				def: "",

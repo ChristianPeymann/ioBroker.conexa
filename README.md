@@ -141,7 +141,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 
 ### **WORK IN PROGRESS**
 
-### **WORK IN PROGRESS**
+- (ChristianPeymann) Fixed state roles and added missing translations for object definitions
 
 ### 0.1.6 (2026-10-26)
 

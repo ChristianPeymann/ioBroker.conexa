@@ -159,7 +159,16 @@
       "common": {
         "name": {
           "en": "Information",
-          "de": "Informationen"
+          "de": "Informationen",
+          "ru": "Информация",
+          "pt": "Informação",
+          "nl": "Informatie",
+          "fr": "Informations",
+          "it": "Informazioni",
+          "es": "Información",
+          "pl": "Informacje",
+          "uk": "Інформація",
+          "zh-cn": "信息"
         }
       },
       "native": {}
@@ -171,7 +180,16 @@
         "role": "indicator.connected",
         "name": {
           "en": "Device or service connected",
-          "de": "Gerät oder Dienst verbunden"
+          "de": "Gerät oder Dienst verbunden",
+          "ru": "Устройство или служба подключены",
+          "pt": "Dispositivo ou serviço conectado",
+          "nl": "Apparaat of service verbonden",
+          "fr": "Appareil ou service connecté",
+          "it": "Dispositivo o servizio connesso",
+          "es": "Dispositivo o servicio conectado",
+          "pl": "Urządzenie lub usługa połączona",
+          "uk": "Пристрій або служба підключені",
+          "zh-cn": "设备或服务已连接"
         },
         "type": "boolean",
         "read": true,
@@ -186,7 +204,16 @@
       "common": {
         "name": {
           "en": "Smart Meter Gateway Info & Control",
-          "de": "Smart Meter Gateway Info & Steuerung"
+          "de": "Smart Meter Gateway Info & Steuerung",
+          "ru": "Информация и управление шлюзом интеллектуального счетчика",
+          "pt": "Informações e controle do gateway de medidor inteligente",
+          "nl": "Informatie en bediening van de slimme metergateway",
+          "fr": "Informations et commande de la passerelle de compteur intelligent",
+          "it": "Informazioni e controllo del gateway per contatori intelligenti",
+          "es": "Información y control de la pasarela de contador inteligente",
+          "pl": "Informacje i sterowanie bramką inteligentnego licznika",
+          "uk": "Інформація та керування шлюзом інтелектуального лічильника",
+          "zh-cn": "智能电表网关信息与控制"
         }
       },
       "native": {}
@@ -198,7 +225,16 @@
         "role": "info.serial",
         "name": {
           "en": "SMGW ID",
-          "de": "SMGW-ID"
+          "de": "SMGW-ID",
+          "ru": "Идентификатор SMGW",
+          "pt": "ID do SMGW",
+          "nl": "SMGW-ID",
+          "fr": "ID SMGW",
+          "it": "ID SMGW",
+          "es": "ID de SMGW",
+          "pl": "ID SMGW",
+          "uk": "Ідентифікатор SMGW",
+          "zh-cn": "SMGW 标识"
         },
         "type": "string",
         "read": true,
@@ -214,7 +250,16 @@
         "role": "info.status",
         "name": {
           "en": "SMGW State (Hex)",
-          "de": "SMGW-Status (Hex)"
+          "de": "SMGW-Status (Hex)",
+          "ru": "Состояние SMGW (шестнадцатеричное)",
+          "pt": "Estado do SMGW (hexadecimal)",
+          "nl": "SMGW-status (hexadecimaal)",
+          "fr": "État du SMGW (hexadécimal)",
+          "it": "Stato SMGW (esadecimale)",
+          "es": "Estado de SMGW (hexadecimal)",
+          "pl": "Stan SMGW (szesnastkowo)",
+          "uk": "Стан SMGW (шістнадцятковий)",
+          "zh-cn": "SMGW 状态（十六进制）"
         },
         "type": "string",
         "read": true,
@@ -230,7 +275,16 @@
         "role": "value.time",
         "name": {
           "en": "SMGW System Time",
-          "de": "SMGW-Systemzeit"
+          "de": "SMGW-Systemzeit",
+          "ru": "Системное время SMGW",
+          "pt": "Hora do sistema SMGW",
+          "nl": "SMGW-systeemtijd",
+          "fr": "Heure système du SMGW",
+          "it": "Ora di sistema SMGW",
+          "es": "Hora del sistema SMGW",
+          "pl": "Czas systemowy SMGW",
+          "uk": "Системний час SMGW",
+          "zh-cn": "SMGW 系统时间"
         },
         "type": "number",
         "read": true,
@@ -246,7 +300,16 @@
         "role": "info.firmware",
         "name": {
           "en": "Firmware Version",
-          "de": "Firmware-Version"
+          "de": "Firmware-Version",
+          "ru": "Версия прошивки",
+          "pt": "Versão do firmware",
+          "nl": "Firmwareversie",
+          "fr": "Version du firmware",
+          "it": "Versione firmware",
+          "es": "Versión del firmware",
+          "pl": "Wersja oprogramowania",
+          "uk": "Версія прошивки",
+          "zh-cn": "固件版本"
         },
         "type": "string",
         "read": true,
@@ -262,7 +325,16 @@
         "role": "text",
         "name": {
           "en": "Firmware Hash",
-          "de": "Firmware-Hash"
+          "de": "Firmware-Hash",
+          "ru": "Хеш прошивки",
+          "pt": "Hash do firmware",
+          "nl": "Firmwarehash",
+          "fr": "Empreinte du firmware",
+          "it": "Hash del firmware",
+          "es": "Hash del firmware",
+          "pl": "Skrót oprogramowania",
+          "uk": "Хеш прошивки",
+          "zh-cn": "固件哈希"
         },
         "type": "string",
         "read": true,
@@ -278,7 +350,16 @@
         "role": "text",
         "name": {
           "en": "API Version",
-          "de": "API-Version"
+          "de": "API-Version",
+          "ru": "Версия API",
+          "pt": "Versão da API",
+          "nl": "API-versie",
+          "fr": "Version de l’API",
+          "it": "Versione API",
+          "es": "Versión de la API",
+          "pl": "Wersja API",
+          "uk": "Версія API",
+          "zh-cn": "API 版本"
         },
         "type": "string",
         "read": true,
@@ -294,7 +375,16 @@
         "role": "json",
         "name": {
           "en": "Certificates (HAN & WAN JSON)",
-          "de": "Zertifikate (HAN & WAN JSON)"
+          "de": "Zertifikate (HAN & WAN JSON)",
+          "ru": "Сертификаты (HAN и WAN, JSON)",
+          "pt": "Certificados (HAN e WAN, JSON)",
+          "nl": "Certificaten (HAN en WAN, JSON)",
+          "fr": "Certificats (HAN et WAN, JSON)",
+          "it": "Certificati (HAN e WAN, JSON)",
+          "es": "Certificados (HAN y WAN, JSON)",
+          "pl": "Certyfikaty (HAN i WAN, JSON)",
+          "uk": "Сертифікати (HAN і WAN, JSON)",
+          "zh-cn": "证书（HAN 和 WAN，JSON）"
         },
         "type": "string",
         "read": true,
@@ -310,7 +400,16 @@
         "role": "value.time",
         "name": {
           "en": "Last transmission to grid operator (Event 16001)",
-          "de": "Letzte Übertragung an Netzbetreiber (Event 16001)"
+          "de": "Letzte Übertragung an Netzbetreiber (Event 16001)",
+          "ru": "Последняя передача оператору сети (событие 16001)",
+          "pt": "Última transmissão ao operador da rede (evento 16001)",
+          "nl": "Laatste verzending naar netbeheerder (gebeurtenis 16001)",
+          "fr": "Dernière transmission au gestionnaire de réseau (événement 16001)",
+          "it": "Ultima trasmissione al gestore di rete (evento 16001)",
+          "es": "Última transmisión al operador de red (evento 16001)",
+          "pl": "Ostatnia transmisja do operatora sieci (zdarzenie 16001)",
+          "uk": "Останнє передавання оператору мережі (подія 16001)",
+          "zh-cn": "上次传输至电网运营商（事件 16001）"
         },
         "type": "number",
         "read": true,
@@ -326,7 +425,16 @@
         "role": "button",
         "name": {
           "en": "Trigger Self-Test",
-          "de": "Selbsttest starten"
+          "de": "Selbsttest starten",
+          "ru": "Запустить самопроверку",
+          "pt": "Iniciar autoteste",
+          "nl": "Zelftest starten",
+          "fr": "Lancer l’autotest",
+          "it": "Avvia autotest",
+          "es": "Iniciar autodiagnóstico",
+          "pl": "Uruchom autotest",
+          "uk": "Запустити самоперевірку",
+          "zh-cn": "启动自检"
         },
         "type": "boolean",
         "read": false,
@@ -342,7 +450,16 @@
         "role": "text",
         "name": {
           "en": "Self-Test Result Code",
-          "de": "Selbsttest Ergebnis-Code"
+          "de": "Selbsttest Ergebnis-Code",
+          "ru": "Код результата самопроверки",
+          "pt": "Código do resultado do autoteste",
+          "nl": "Resultaatcode van de zelftest",
+          "fr": "Code du résultat de l’autotest",
+          "it": "Codice del risultato dell’autotest",
+          "es": "Código del resultado del autodiagnóstico",
+          "pl": "Kod wyniku autotestu",
+          "uk": "Код результату самоперевірки",
+          "zh-cn": "自检结果代码"
         },
         "type": "string",
         "read": true,
@@ -358,7 +475,16 @@
         "role": "text",
         "name": {
           "en": "Self-Test Description",
-          "de": "Selbsttest Beschreibung"
+          "de": "Selbsttest Beschreibung",
+          "ru": "Описание самопроверки",
+          "pt": "Descrição do autoteste",
+          "nl": "Beschrijving van de zelftest",
+          "fr": "Description de l’autotest",
+          "it": "Descrizione dell’autotest",
+          "es": "Descripción del autodiagnóstico",
+          "pl": "Opis autotestu",
+          "uk": "Опис самоперевірки",
+          "zh-cn": "自检说明"
         },
         "type": "string",
         "read": true,
@@ -373,7 +499,16 @@
       "common": {
         "name": {
           "en": "Gateway Logs",
-          "de": "Gateway-Logbuch"
+          "de": "Gateway-Logbuch",
+          "ru": "Журнал шлюза",
+          "pt": "Registros do gateway",
+          "nl": "Gatewaylogboeken",
+          "fr": "Journaux de la passerelle",
+          "it": "Registri del gateway",
+          "es": "Registros de la pasarela",
+          "pl": "Dzienniki bramki",
+          "uk": "Журнали шлюзу",
+          "zh-cn": "网关日志"
         }
       },
       "native": {}
@@ -385,7 +520,16 @@
         "role": "value",
         "name": {
           "en": "Number of Log Entries",
-          "de": "Anzahl der Log-Einträge"
+          "de": "Anzahl der Log-Einträge",
+          "ru": "Количество записей журнала",
+          "pt": "Número de entradas de registro",
+          "nl": "Aantal logboekvermeldingen",
+          "fr": "Nombre d’entrées du journal",
+          "it": "Numero di voci di registro",
+          "es": "Número de entradas del registro",
+          "pl": "Liczba wpisów dziennika",
+          "uk": "Кількість записів журналу",
+          "zh-cn": "日志条目数"
         },
         "type": "number",
         "read": true,
@@ -401,7 +545,16 @@
         "role": "json",
         "name": {
           "en": "Log Entries (JSON)",
-          "de": "Log-Einträge (JSON)"
+          "de": "Log-Einträge (JSON)",
+          "ru": "Записи журнала (JSON)",
+          "pt": "Entradas de registro (JSON)",
+          "nl": "Logboekvermeldingen (JSON)",
+          "fr": "Entrées du journal (JSON)",
+          "it": "Voci di registro (JSON)",
+          "es": "Entradas del registro (JSON)",
+          "pl": "Wpisy dziennika (JSON)",
+          "uk": "Записи журналу (JSON)",
+          "zh-cn": "日志条目（JSON）"
         },
         "type": "string",
         "read": true,
@@ -417,7 +570,16 @@
         "role": "text",
         "name": {
           "en": "Latest Log Message",
-          "de": "Letzte Log-Meldung"
+          "de": "Letzte Log-Meldung",
+          "ru": "Последнее сообщение журнала",
+          "pt": "Última mensagem de registro",
+          "nl": "Laatste logboekbericht",
+          "fr": "Dernier message du journal",
+          "it": "Ultimo messaggio di registro",
+          "es": "Último mensaje del registro",
+          "pl": "Ostatni komunikat dziennika",
+          "uk": "Останнє повідомлення журналу",
+          "zh-cn": "最新日志消息"
         },
         "type": "string",
         "read": true,
@@ -433,7 +595,16 @@
         "role": "value.time",
         "name": {
           "en": "Latest Log Timestamp",
-          "de": "Zeitstempel letzte Log-Meldung"
+          "de": "Zeitstempel letzte Log-Meldung",
+          "ru": "Время последнего сообщения журнала",
+          "pt": "Data e hora da última mensagem de registro",
+          "nl": "Tijdstip van het laatste logboekbericht",
+          "fr": "Horodatage du dernier message du journal",
+          "it": "Ora dell’ultimo messaggio di registro",
+          "es": "Marca de tiempo del último mensaje del registro",
+          "pl": "Znacznik czasu ostatniego komunikatu dziennika",
+          "uk": "Час останнього повідомлення журналу",
+          "zh-cn": "最新日志消息时间戳"
         },
         "type": "number",
         "read": true,
@@ -449,7 +620,16 @@
         "role": "text",
         "name": {
           "en": "Latest Log Event ID",
-          "de": "Letzte Log Event-ID"
+          "de": "Letzte Log Event-ID",
+          "ru": "Идентификатор последнего события журнала",
+          "pt": "ID do último evento de registro",
+          "nl": "ID van de laatste loggebeurtenis",
+          "fr": "ID du dernier événement du journal",
+          "it": "ID dell’ultimo evento di registro",
+          "es": "ID del último evento del registro",
+          "pl": "ID ostatniego zdarzenia dziennika",
+          "uk": "Ідентифікатор останньої події журналу",
+          "zh-cn": "最新日志事件 ID"
         },
         "type": "string",
         "read": true,
@@ -464,7 +644,16 @@
       "common": {
         "name": {
           "en": "Usage Points (Tariffs)",
-          "de": "Messlokationen / Tarife (Usage Points)"
+          "de": "Messlokationen / Tarife (Usage Points)",
+          "ru": "Точки учета (тарифы)",
+          "pt": "Pontos de medição (tarifas)",
+          "nl": "Aansluitpunten (tarieven)",
+          "fr": "Points de comptage (tarifs)",
+          "it": "Punti di prelievo (tariffe)",
+          "es": "Puntos de suministro (tarifas)",
+          "pl": "Punkty poboru (taryfy)",
+          "uk": "Точки обліку (тарифи)",
+          "zh-cn": "计量点（费率）"
         }
       },
       "native": {}
@@ -476,7 +665,16 @@
         "role": "json",
         "name": {
           "en": "Cached Usage Points Configuration (JSON)",
-          "de": "Gespeicherte Tarif-Konfiguration (JSON-Cache)"
+          "de": "Gespeicherte Tarif-Konfiguration (JSON-Cache)",
+          "ru": "Кэш конфигурации точек учета (JSON)",
+          "pt": "Configuração em cache dos pontos de medição (JSON)",
+          "nl": "Gecachte configuratie van aansluitpunten (JSON)",
+          "fr": "Configuration en cache des points de comptage (JSON)",
+          "it": "Configurazione in cache dei punti di prelievo (JSON)",
+          "es": "Configuración en caché de los puntos de suministro (JSON)",
+          "pl": "Buforowana konfiguracja punktów poboru (JSON)",
+          "uk": "Кеш конфігурації точок обліку (JSON)",
+          "zh-cn": "缓存的计量点配置（JSON）"
         },
         "type": "string",
         "read": true,
@@ -492,7 +690,16 @@
         "role": "value.time",
         "name": {
           "en": "Catalog Last Updated",
-          "de": "Tarif-Katalog zuletzt aktualisiert"
+          "de": "Tarif-Katalog zuletzt aktualisiert",
+          "ru": "Время последнего обновления каталога",
+          "pt": "Última atualização do catálogo",
+          "nl": "Catalogus laatst bijgewerkt",
+          "fr": "Dernière mise à jour du catalogue",
+          "it": "Ultimo aggiornamento del catalogo",
+          "es": "Última actualización del catálogo",
+          "pl": "Data ostatniej aktualizacji katalogu",
+          "uk": "Час останнього оновлення каталогу",
+          "zh-cn": "目录上次更新时间"
         },
         "type": "number",
         "read": true,
@@ -508,7 +715,16 @@
         "role": "button",
         "name": {
           "en": "Scan for new tariffs / Refresh catalog",
-          "de": "Neue Tarife suchen / Katalog neu einlesen"
+          "de": "Neue Tarife suchen / Katalog neu einlesen",
+          "ru": "Поиск новых тарифов / обновить каталог",
+          "pt": "Procurar novas tarifas / atualizar catálogo",
+          "nl": "Zoeken naar nieuwe tarieven / catalogus vernieuwen",
+          "fr": "Rechercher de nouveaux tarifs / actualiser le catalogue",
+          "it": "Cerca nuove tariffe / aggiorna il catalogo",
+          "es": "Buscar nuevas tarifas / actualizar catálogo",
+          "pl": "Szukaj nowych taryf / odśwież katalog",
+          "uk": "Пошук нових тарифів / оновити каталог",
+          "zh-cn": "扫描新费率 / 刷新目录"
         },
         "type": "boolean",
         "read": false,
