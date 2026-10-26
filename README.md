@@ -138,7 +138,8 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### 0.1.7 (2026-10-26)
+
+### **WORK IN PROGRESS**
 
 - (ChristianPeymann) Fixed state roles and added missing translations for object definitions
 
