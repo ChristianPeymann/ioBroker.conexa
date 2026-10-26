@@ -1,27 +1,27 @@
 version: 2
 updates:
-  - package-ecosystem: npm
-    directory: "/"
-    schedule:
-      interval: monthly
-      time: "00:05"
-      timezone: Europe/Berlin
-    open-pull-requests-limit: 15
-    assignees:
-      - ChristianPeymann
-    versioning-strategy: increase
-    cooldown:
-      default-days: 7
-    ignore:
-      - dependency-name: "@types/node"
-        update-types: ["version-update:semver-major"]
+    - package-ecosystem: npm
+      directory: "/"
+      schedule:
+          interval: cron
+          cronjob: "15 4 12 * *"
+          timezone: Europe/Berlin
+      open-pull-requests-limit: 15
+      assignees:
+          - ChristianPeymann
+      versioning-strategy: increase
+      cooldown:
+          default-days: 7
+      ignore:
+          - dependency-name: "@types/node"
+            update-types: ["version-update:semver-major"]
 
-  - package-ecosystem: github-actions
-    directory: "/"
-    schedule:
-      interval: monthly
-      time: "00:05"
-      timezone: Europe/Berlin
-    open-pull-requests-limit: 15
-    assignees:
-      - ChristianPeymann
+    - package-ecosystem: github-actions
+      directory: "/"
+      schedule:
+          interval: cron
+          cronjob: "20 4 12 * *"
+          timezone: Europe/Berlin
+      open-pull-requests-limit: 15
+      assignees:
+          - ChristianPeymann
