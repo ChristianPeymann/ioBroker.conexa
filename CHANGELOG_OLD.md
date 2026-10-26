@@ -3,7 +3,6 @@
 
 - (ChristianPeymann) Resolved issues detected by repository checker (#1)
 
-
 ## 0.1.1
 
 - (Christian Peymann) Initial clean release

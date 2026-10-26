@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "conexa",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "news": {
+      "0.1.8": {
+        "en": "Fixed state roles and added missing translations for object definitions",
+        "de": "Statusrollen und fehlende Übersetzungen für Objektdefinitionen",
+        "ru": "Исправлены роли состояний и добавлены недостающие переводы для определений объектов",
+        "pt": "Funções de estado fixas e traduções ausentes para definições de objetos",
+        "nl": "Statusrollen opgelost en ontbrekende vertalingen toegevoegd voor objectdefinities",
+        "fr": "Rôles d'état fixes et traductions manquantes pour les définitions d'objets",
+        "it": "Ruoli fissi e traduzioni mancanti per le definizioni degli oggetti",
+        "es": "Fijó los roles estatales y añadió las traducciones que faltaban",
+        "pl": "Naprawiono role stanu i dodano brakujące tłumaczenia dla definicji obiektów",
+        "uk": "Виправлені ролі стану та додані відсутні переклади для визначень об'єктів",
+        "zh-cn": "修复了状态角色并添加了对象定义缺失的翻译"
+      },
       "0.1.7": {
         "en": "Fixed state roles and added missing translations for object definitions",
         "de": "Statusrollen und fehlende Übersetzungen für Objektdefinitionen",
