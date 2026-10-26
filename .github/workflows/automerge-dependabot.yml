@@ -10,6 +10,9 @@ permissions:
 
 jobs:
     automerge:
-        uses: ioBroker/testing-action-automerge-dependabot@v1
-        with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: Automerge Dependabot PRs
+              uses: ioBroker/testing-action-automerge-dependabot@v1
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
