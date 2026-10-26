@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "conexa",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "news": {
+      "0.1.6": {
+        "en": "Updated required Node.js version to >= 24",
+        "de": "Benötigte Node.js auf >= 24 aktualisiert",
+        "ru": "Требуемая версия Node.js обновлена до >= 24",
+        "pt": "Atualizou a versão Node.js para >= 24",
+        "nl": "De vereiste versie van Node.js is bijgewerkt naar >= 24",
+        "fr": "Version Node.js requise mise à jour à >= 24",
+        "it": "Aggiornamento richiesto di Node.js a >= 24",
+        "es": "Se actualizó la versión Node.js requerida a >= 24",
+        "pl": "Zaktualizowano wymaganą wersję Node.js do >= 24",
+        "uk": "Оновлена необхідна версія Node.js до>= 24",
+        "zh-cn": "将所需的 Node.js 版本更新为 >= 24"
+      },
       "0.1.5": {
         "en": "Cleaned up news section and resolved all repository checker issues",
         "de": "News-Bereich bereinigt und Repository-Checker-Probleme gelöst",
