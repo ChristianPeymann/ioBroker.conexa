@@ -61,6 +61,13 @@ The adapter creates states below `conexa.0`:
 
 ### **WORK IN PROGRESS**
 
+### 0.1.10 (2026-11-18)
+
+- (ChristianPeymann) Translated all log messages to English
+- (ChristianPeymann) Added full 11-language i18n support for dynamic objects
+- (ChristianPeymann) Improved documentation and separated developer manual into DEVELOPMENT.md
+- (ChristianPeymann) Updated package description to English
+
 ### 0.1.9 (2026-10-26)
 
 - (ChristianPeymann) Adjusted minimum Node.js version to 22

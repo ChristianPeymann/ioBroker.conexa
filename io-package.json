@@ -4,17 +4,17 @@
 		"version": "0.1.10",
 		"news": {
 			"0.1.10": {
-				"en": "Improved object translations and documentation, and updated dependencies",
-				"de": "Objektübersetzungen und Dokumentation verbessert sowie Abhängigkeiten aktualisiert",
-				"ru": "Улучшены переводы объектов и документация, обновлены зависимости",
-				"pt": "Traduções de objetos e documentação melhoradas, dependências atualizadas",
-				"nl": "Objectvertalingen en documentatie verbeterd en afhankelijkheden bijgewerkt",
-				"fr": "Traductions des objets et documentation améliorées, dépendances mises à jour",
-				"it": "Migliorate le traduzioni degli oggetti e la documentazione, dipendenze aggiornate",
-				"es": "Se mejoraron las traducciones de objetos y la documentación, y se actualizaron las dependencias",
-				"pl": "Ulepszono tłumaczenia obiektów i dokumentację oraz zaktualizowano zależności",
-				"uk": "Покращено переклади об'єктів і документацію та оновлено залежності",
-				"zh-cn": "改进了对象翻译和文档，并更新了依赖项"
+				"en": "Translated logs, added 11-language i18n for dynamic objects, and improved documentation",
+				"de": "Log-Meldungen auf Englisch übersetzt, 11-Sprachen-i18n für dynamische Objekte ergänzt und Dokumentation verbessert",
+				"ru": "Переведены логи, добавлена поддержка 11 языков для динамических объектов и улучшена документация",
+				"pt": "Logs traduzidos, i18n de 11 idiomas adicionado para objetos dinâmicos e documentação melhorada",
+				"nl": "Logs vertaald, 11-talige i18n toegevoegd voor dynamische objecten en documentatie verbeterd",
+				"fr": "Journaux traduits, i18n en 11 langues ajoutée pour les objets dynamiques et documentation améliorée",
+				"it": "Log tradotti, i18n a 11 lingue aggiunta per gli oggetti dinamici e documentazione migliorata",
+				"es": "Registros traducidos, i18n de 11 idiomas añadida para objetos dinámicos y documentación mejorada",
+				"pl": "Przetłumaczono logi, dodano 11-języczne i18n dla obiektów dynamicznych i ulepszono dokumentację",
+				"uk": "Перекладено логи, додано 11-мовну i18n для динамічних об'єктів та покращено документацію",
+				"zh-cn": "已翻译日志，为动态 11-object 添加了 11 种语言的 i18n 支持，并改进了文档"
 			},
 			"0.1.9": {
 				"en": "Adjusted minimum Node.js version to 22",
