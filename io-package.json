@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "conexa",
-		"version": "0.1.9",
+		"version": "0.1.10",
 		"news": {
+			"0.1.10": {
+				"en": "Improved object translations and documentation, and updated dependencies",
+				"de": "Objektübersetzungen und Dokumentation verbessert sowie Abhängigkeiten aktualisiert",
+				"ru": "Улучшены переводы объектов и документация, обновлены зависимости",
+				"pt": "Traduções de objetos e documentação melhoradas, dependências atualizadas",
+				"nl": "Objectvertalingen en documentatie verbeterd en afhankelijkheden bijgewerkt",
+				"fr": "Traductions des objets et documentation améliorées, dépendances mises à jour",
+				"it": "Migliorate le traduzioni degli oggetti e la documentazione, dipendenze aggiornate",
+				"es": "Se mejoraron las traducciones de objetos y la documentación, y se actualizaron las dependencias",
+				"pl": "Ulepszono tłumaczenia obiektów i dokumentację oraz zaktualizowano zależności",
+				"uk": "Покращено переклади об'єктів і документацію та оновлено залежності",
+				"zh-cn": "改进了对象翻译和文档，并更新了依赖项"
+			},
 			"0.1.9": {
 				"en": "Adjusted minimum Node.js version to 22",
 				"de": "Mindestversion von Node.js auf 22 angepasst",

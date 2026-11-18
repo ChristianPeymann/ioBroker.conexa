@@ -182,12 +182,12 @@ class Conexa extends utils.Adapter {
 		});
 		this.on("ready", () => {
 			void this.onReady().catch(error => {
-				this.log.error(`Fehler beim Initialisieren des Adapters: ${getErrorMessage(error)}`);
+				this.log.error(`Error initializing the adapter: ${getErrorMessage(error)}`);
 			});
 		});
 		this.on("stateChange", (id, state) => {
 			void this.onStateChange(id, state).catch(error => {
-				this.log.error(`Fehler bei der Verarbeitung von ${id}: ${getErrorMessage(error)}`);
+				this.log.error(`Error processing ${id}: ${getErrorMessage(error)}`);
 			});
 		});
 		this.on("unload", this.onUnload.bind(this));
@@ -206,12 +206,12 @@ class Conexa extends utils.Adapter {
 		const targetHost = this.config.useIpv6 && !rawIp.startsWith("[") ? `[${rawIp}]` : rawIp;
 
 		if (!targetHost || !this.config.username || !this.config.password) {
-			this.log.warn("Bitte IP-Adresse, Benutzername und Passwort in den Adapter-Einstellungen hinterlegen!");
+			this.log.warn("Please configure the IP address, username, and password in the adapter settings!");
 			return;
 		}
 
 		this.baseUrl = `https://${targetHost}:443/smgw/m2m/`;
-		this.log.info(`Verbinde mit CONEXA 3.0 unter ${this.baseUrl} ...`);
+		this.log.info(`Connecting to CONEXA 3.0 at ${this.baseUrl} ...`);
 
 		// Buttons abonnieren (Selbsttest & Tarif-Katalog neu einlesen)
 		this.subscribeStates("gateway.triggerSelfTest");
@@ -225,7 +225,7 @@ class Conexa extends utils.Adapter {
 
 		// Poll-Intervall aus der Config (in Minuten, Standard: 15 Min, mindestens 1 Min)
 		const intervalMinutes = Math.max(1, Number(this.config.pollInterval) || 15);
-		this.log.info(`Abfrage-Intervall gestartet: alle ${intervalMinutes} Minuten.`);
+		this.log.info(`Polling interval started: every ${intervalMinutes} minutes.`);
 		await this.scheduleNextPoll(hasNewData);
 	}
 
@@ -241,11 +241,11 @@ class Conexa extends utils.Adapter {
 		}
 
 		if (id.endsWith(".gateway.triggerSelfTest") && state.val === true) {
-			this.log.info("Manueller Selbsttest über Button angefordert...");
+			this.log.info("Manual self-test requested via button...");
 			await this.triggerSelfTest();
 			await this.setStateAsync("gateway.triggerSelfTest", false, true);
 		} else if (id.endsWith(".usagePoints.refreshCatalog") && state.val === true) {
-			this.log.info("Manuelles Neueinlesen des Tarif-Katalogs angefordert...");
+			this.log.info("Manual tariff catalog refresh requested...");
 			await this.discoverUsagePoints(true);
 			await this.pollReadings(true);
 			await this.setStateAsync("usagePoints.refreshCatalog", false, true);
@@ -275,18 +275,16 @@ class Conexa extends utils.Adapter {
 			const isRedirect = (statusCode: number): boolean => [301, 302, 307, 308].includes(statusCode);
 			const maxRedirects = 5;
 
-			this.log.debug(
-				`[API] Sende unauthentifizierten Initial-Request für Methode "${method}" an ${this.baseUrl}`,
-			);
+			this.log.debug(`[API] Sending unauthenticated initial request for method "${method}" to ${this.baseUrl}`);
 			let response = await this.requestConexa(requestUrl, body);
 			this.log.debug(
-				`[API] Initial-Antwort für "${method}": Status ${response.statusCode} (Dauer: ${Date.now() - startTime}ms)`,
+				`[API] Initial response for "${method}": status ${response.statusCode} (duration: ${Date.now() - startTime}ms)`,
 			);
 
 			let redirectCount = 0;
 			while (isRedirect(response.statusCode)) {
 				this.log.debug(
-					`[API] Gateway sendet Redirect (${response.statusCode}) nach Location: ${response.location}`,
+					`[API] Gateway sent redirect (${response.statusCode}) to Location: ${response.location}`,
 				);
 				if (!response.location) {
 					throw new Error(`Gateway-Redirect (${response.statusCode}) enthält keinen Location-Header.`);
@@ -297,7 +295,7 @@ class Conexa extends utils.Adapter {
 				requestUrl = new URL(response.location, requestUrl);
 				this.baseUrl = requestUrl.toString();
 				response = await this.requestConexa(requestUrl, body);
-				this.log.debug(`[API] Redirect-Antwort für "${method}": Status ${response.statusCode}`);
+				this.log.debug(`[API] Redirect response for "${method}": status ${response.statusCode}`);
 			}
 
 			if (response.statusCode === 200) {
@@ -312,7 +310,7 @@ class Conexa extends utils.Adapter {
 
 			if (response.statusCode === 401) {
 				this.log.debug(
-					`[API] Digest-Challenge empfangen. WWW-Authenticate Header: ${JSON.stringify(response.wwwAuthenticate)}`,
+					`[API] Digest challenge received. WWW-Authenticate header: ${JSON.stringify(response.wwwAuthenticate)}`,
 				);
 			}
 
@@ -326,20 +324,20 @@ class Conexa extends utils.Adapter {
 
 			const authorization = this.createDigestAuthorization(response.wwwAuthenticate, requestUrl);
 			this.log.debug(
-				`[API] Digest-Authorization-Header generiert (Wert wird nicht protokolliert). Sende authentifizierten Request für "${method}"...`,
+				`[API] Digest authorization header generated (value will not be logged). Sending authenticated request for "${method}"...`,
 			);
 
 			requestStep = "Schritt 2 (authentifizierter Request)";
 			const authStartTime = Date.now();
 			let authenticatedResponse = await this.requestConexa(requestUrl, body, authorization);
 			this.log.debug(
-				`[API] Authentifizierte Antwort für "${method}": Status ${authenticatedResponse.statusCode} (Dauer: ${Date.now() - authStartTime}ms)`,
+				`[API] Authenticated response for "${method}": status ${authenticatedResponse.statusCode} (duration: ${Date.now() - authStartTime}ms)`,
 			);
 
 			redirectCount = 0;
 			while (isRedirect(authenticatedResponse.statusCode)) {
 				this.log.debug(
-					`[API] Gateway sendet Redirect (${authenticatedResponse.statusCode}) nach Location: ${authenticatedResponse.location}`,
+					`[API] Gateway sent redirect (${authenticatedResponse.statusCode}) to Location: ${authenticatedResponse.location}`,
 				);
 				if (!authenticatedResponse.location) {
 					throw new Error(
@@ -354,7 +352,7 @@ class Conexa extends utils.Adapter {
 				const redirectAuthorization = this.createDigestAuthorization(response.wwwAuthenticate, requestUrl);
 				authenticatedResponse = await this.requestConexa(requestUrl, body, redirectAuthorization);
 				this.log.debug(
-					`[API] Authentifizierte Redirect-Antwort für "${method}": Status ${authenticatedResponse.statusCode}`,
+					`[API] Authenticated redirect response for "${method}": status ${authenticatedResponse.statusCode}`,
 				);
 			}
 
@@ -381,7 +379,7 @@ class Conexa extends utils.Adapter {
 			return this.parseGatewayResponse(authenticatedResponse.body);
 		} catch (error) {
 			const message = getErrorMessage(error);
-			this.log.error(`[API-Fehler] Methode "${method}" fehlgeschlagen (${requestStep}): ${message}`);
+			this.log.error(`[API Error] Method "${method}" failed (${requestStep}): ${message}`);
 			throw new Error(`API-Fehler (${method}, ${requestStep}): ${message}`);
 		}
 	}
@@ -569,7 +567,9 @@ class Conexa extends utils.Adapter {
 					this.usagePointsCache = parsed;
 					this.cachedUsagePointMissingObis = this.usagePointsCache.some(up => !up.obis);
 					this.lastCatalogUpdate = toTimestamp(updatedState?.val) ?? Date.now();
-					this.log.info(`${this.usagePointsCache.length} Tarife (Usage Points) aus lokalem Cache geladen.`);
+					this.log.info(
+						`${this.usagePointsCache.length} tariffs (usage points) loaded from the local cache.`,
+					);
 					for (const up of this.usagePointsCache) {
 						if (!up.database) {
 							up.database = "origin";
@@ -579,7 +579,7 @@ class Conexa extends utils.Adapter {
 				}
 			}
 		} catch (error: unknown) {
-			this.log.warn(`Konnte Tarif-Cache nicht lesen, lese neu vom Gateway ein: ${getErrorMessage(error)}`);
+			this.log.warn(`Could not read the tariff cache; refreshing it from the gateway: ${getErrorMessage(error)}`);
 			this.usagePointsCache = [];
 		}
 	}
@@ -615,7 +615,7 @@ class Conexa extends utils.Adapter {
 			await this.setStateAsync("info.connection", true, true);
 			return hasNewData;
 		} catch (error: unknown) {
-			this.log.error(`Fehler beim Abruf vom Gateway: ${getErrorMessage(error)}`);
+			this.log.error(`Error retrieving data from the gateway: ${getErrorMessage(error)}`);
 			await this.setStateAsync("info.connection", false, true);
 			return false;
 		}
@@ -657,7 +657,7 @@ class Conexa extends utils.Adapter {
 		const nextRunTimestamp = Date.now() + delayMs;
 		await this.setStateAsync("gateway.nextPollTime", nextRunTimestamp, true);
 		this.log.debug(
-			`Nächster synchronisierter Abruf geplant für ${new Date(nextRunTimestamp).toISOString()} (in ${Math.round(delayMs / 1000)}s)`,
+			`Next synchronized poll scheduled for ${new Date(nextRunTimestamp).toISOString()} (in ${Math.round(delayMs / 1000)}s)`,
 		);
 
 		this.pollTimer = this.setTimeout(async () => {
@@ -666,7 +666,7 @@ class Conexa extends utils.Adapter {
 				const newData = await this.pollGatewayData();
 				await this.scheduleNextPoll(newData);
 			} catch (error: unknown) {
-				this.log.error(`Fehler im adaptiven Polling: ${getErrorMessage(error)}`);
+				this.log.error(`Error in adaptive polling: ${getErrorMessage(error)}`);
 			}
 		}, delayMs);
 	}
@@ -677,60 +677,172 @@ class Conexa extends utils.Adapter {
 	private async ensureGatewayStatsObjects(): Promise<void> {
 		await this.setObjectNotExistsAsync("gateway", {
 			type: "channel",
-			common: { name: "Gateway" },
+			common: {
+				name: {
+					en: "Gateway",
+					de: "Gateway",
+					ru: "Шлюз",
+					pt: "Gateway",
+					nl: "Gateway",
+					fr: "Passerelle",
+					it: "Gateway",
+					es: "Pasarela",
+					pl: "Bramka",
+					uk: "Шлюз",
+					"zh-cn": "网关",
+				},
+			},
 			native: {},
 		});
 		await this.setObjectNotExistsAsync("gateway.marketTransmissions", {
 			type: "channel",
-			common: { name: "Übermittlungen an Netzbetreiber" },
+			common: {
+				name: {
+					en: "Transmissions to grid operator",
+					de: "Übermittlungen an Netzbetreiber",
+					ru: "Передачи оператору сетевой системы",
+					pt: "Transmissões para o operador da rede",
+					nl: "Overdracht aan netbeheerder",
+					fr: "Transmissions à l'opérateur réseau",
+					it: "Trasmissioni al gestore di rete",
+					es: "Transmisiones al operador de red",
+					pl: "Przekazywanie do operatora sieci",
+					uk: "Передачі оператору мережі",
+					"zh-cn": "向电网运营商传输",
+				},
+			},
 			native: {},
 		});
 
 		const states: Array<{
 			id: string;
-			name: string;
+			name: {
+				en: string;
+				de: string;
+				ru: string;
+				pt: string;
+				nl: string;
+				fr: string;
+				it: string;
+				es: string;
+				pl: string;
+				uk: string;
+				"zh-cn": string;
+			};
 			type: "number" | "string";
 			role: string;
 			def: number | string;
 		}> = [
 			{
 				id: "gateway.marketTransmissions.totalCount",
-				name: "Gesamtzahl Übermittlungen an Netzbetreiber",
+				name: {
+					en: "Total transmissions to grid operator",
+					de: "Gesamtzahl Übermittlungen an Netzbetreiber",
+					ru: "Общее число передач оператору сетевой системы",
+					pt: "Número total de transmissões para o operador da rede",
+					nl: "Totaal aantal overdrachten aan netbeheerder",
+					fr: "Nombre total de transmissions à l'opérateur réseau",
+					it: "Numero totale di trasmissioni al gestore di rete",
+					es: "Número total de transmisiones al operador de red",
+					pl: "Łączna liczba przekazań do operatora sieci",
+					uk: "Загальна кількість передач оператору мережі",
+					"zh-cn": "向电网运营商传输总数",
+				},
 				type: "number",
 				role: "value",
 				def: 0,
 			},
 			{
 				id: "gateway.marketTransmissions.todayCount",
-				name: "Übermittlungen heute",
+				name: {
+					en: "Transmissions today",
+					de: "Übermittlungen heute",
+					ru: "Передачи сегодня",
+					pt: "Transmissões hoje",
+					nl: "Overdrachten vandaag",
+					fr: "Transmissions aujourd'hui",
+					it: "Trasmissioni oggi",
+					es: "Transmisiones hoy",
+					pl: "Przekazania dzisiaj",
+					uk: "Передачі сьогодні",
+					"zh-cn": "今日传输",
+				},
 				type: "number",
 				role: "value",
 				def: 0,
 			},
 			{
 				id: "gateway.marketTransmissions.lastTimestamp",
-				name: "Letzter Übermittlungs-Zeitpunkt",
+				name: {
+					en: "Last transmission timestamp",
+					de: "Letzter Übermittlungs-Zeitpunkt",
+					ru: "Время последней передачи",
+					pt: "Data e hora da última transmissão",
+					nl: "Tijdstempel laatste overdracht",
+					fr: "Horodatage de la dernière transmission",
+					it: "Ora dell'ultima trasmissione",
+					es: "Marca de tiempo de la última transmisión",
+					pl: "Czas ostatniego przekazania",
+					uk: "Час останньої передачі",
+					"zh-cn": "上次传输时间戳",
+				},
 				type: "number",
 				role: "value.time",
 				def: 0,
 			},
 			{
 				id: "gateway.marketTransmissions.historyJson",
-				name: "Historie aller Übermittlungen (JSON)",
+				name: {
+					en: "Transmission history (JSON)",
+					de: "Historie aller Übermittlungen (JSON)",
+					ru: "История всех передач (JSON)",
+					pt: "Histórico de transmissões (JSON)",
+					nl: "Geschiedenis van alle overdrachten (JSON)",
+					fr: "Historique de toutes les transmissions (JSON)",
+					it: "Cronologia di tutte le trasmissioni (JSON)",
+					es: "Historial de todas las transmisiones (JSON)",
+					pl: "Historia wszystkich przekazań (JSON)",
+					uk: "Історія всіх передач (JSON)",
+					"zh-cn": "所有传输历史 (JSON)",
+				},
 				type: "string",
 				role: "json",
 				def: "[]",
 			},
 			{
 				id: "gateway.logTableJson",
-				name: "Gateway-Log als strukturierte Tabelle (JSON)",
+				name: {
+					en: "Gateway log as structured table (JSON)",
+					de: "Gateway-Log als strukturierte Tabelle (JSON)",
+					ru: "Журнал шлюза в виде структурированной таблицы (JSON)",
+					pt: "Log do gateway como tabela estruturada (JSON)",
+					nl: "Gatewaylog als gestructureerde tabel (JSON)",
+					fr: "Journal de la passerelle sous forme de tableau structuré (JSON)",
+					it: "Log del gateway come tabella strutturata (JSON)",
+					es: "Registro del gateway como tabla estructurada (JSON)",
+					pl: "Dziennik bramki jako tabela strukturalna (JSON)",
+					uk: "Журнал шлюзу як структурована таблиця (JSON)",
+					"zh-cn": "网关日志结构化表 (JSON)",
+				},
 				type: "string",
 				role: "json",
 				def: "[]",
 			},
 			{
 				id: "gateway.nextPollTime",
-				name: "Nächster geplanter Abruf",
+				name: {
+					en: "Next scheduled poll",
+					de: "Nächster geplanter Abruf",
+					ru: "Следующий запланированный опрос",
+					pt: "Próxima consulta programada",
+					nl: "Volgende geplande polling",
+					fr: "Prochaine interrogation planifiée",
+					it: "Prossima interrogazione pianificata",
+					es: "Próxima consulta programada",
+					pl: "Następne zaplanowane odczytywanie",
+					uk: "Наступне заплановане опитування",
+					"zh-cn": "下次计划轮询",
+				},
 				type: "number",
 				role: "value.time",
 				def: 0,
@@ -768,7 +880,7 @@ class Conexa extends utils.Adapter {
 		await this.setStateAsync("gateway.state", asStateValue(info["smgw-state"]), true);
 		const gatewayTimestamp = toTimestamp(info["smgw-time"]);
 		if (gatewayTimestamp === undefined) {
-			this.log.warn("Ungültiger Zeitstempel in smgw-info; gateway.time wurde nicht aktualisiert.");
+			this.log.warn("Invalid timestamp in smgw-info; gateway.time was not updated.");
 		} else {
 			await this.setStateAsync("gateway.time", gatewayTimestamp, true);
 		}
@@ -825,9 +937,7 @@ class Conexa extends utils.Adapter {
 				await this.setStateAsync("logs.lastMessage", asStateValue(latest.message), true);
 				const latestTimestamp = toTimestamp(latest.time);
 				if (latestTimestamp === undefined) {
-					this.log.warn(
-						"Ungültiger Zeitstempel im neuesten Log-Eintrag; logs.lastTime wurde nicht aktualisiert.",
-					);
+					this.log.warn("Invalid timestamp in the latest log entry; logs.lastTime was not updated.");
 				} else {
 					await this.setStateAsync("logs.lastTime", latestTimestamp, true);
 				}
@@ -845,11 +955,11 @@ class Conexa extends utils.Adapter {
 								typeof entry?.time === "string" && typeof entry?.message === "string",
 						);
 					} else {
-						this.log.warn("Historie der Netzbetreiber-Übermittlungen ist kein JSON-Array; starte sie neu.");
+						this.log.warn("The grid operator transmission history is not a JSON array; resetting it.");
 					}
 				} catch (error) {
 					this.log.warn(
-						`Historie der Netzbetreiber-Übermittlungen ist ungültig und wird neu aufgebaut: ${
+						`The grid operator transmission history is invalid and will be rebuilt: ${
 							error instanceof Error ? error.message : String(error)
 						}`,
 					);
@@ -877,7 +987,7 @@ class Conexa extends utils.Adapter {
 					.sort((a, b) => a.timestamp - b.timestamp)
 					.at(-1);
 				const loggedEvent = newestNewEvent ?? newMarketEvents[newMarketEvents.length - 1];
-				this.log.info(`Neue Übermittlung an Netzbetreiber (Event 16001) registriert um ${loggedEvent.time}`);
+				this.log.info(`New grid operator transmission (Event 16001) registered at ${loggedEvent.time}`);
 			}
 
 			const today = new Date();
@@ -896,7 +1006,7 @@ class Conexa extends utils.Adapter {
 			const lastMarketTimestamp = lastMarket ? toTimestamp(lastMarket.time) : 0;
 			if (lastMarketTimestamp === undefined) {
 				this.log.warn(
-					"Ungültiger Zeitstempel der letzten Marktübermittlung; gateway.marketTransmissions.lastTimestamp wurde nicht aktualisiert.",
+					"Invalid timestamp for the latest grid operator transmission; gateway.marketTransmissions.lastTimestamp was not updated.",
 				);
 			} else {
 				await this.setStateAsync("gateway.marketTransmissions.lastTimestamp", lastMarketTimestamp, true);
@@ -906,14 +1016,14 @@ class Conexa extends utils.Adapter {
 				const lastTransmissionTimestamp = toTimestamp(lastMarket.time);
 				if (lastTransmissionTimestamp === undefined) {
 					this.log.warn(
-						"Ungültiger Zeitstempel der letzten Marktübermittlung; gateway.lastMarketTransmission wurde nicht aktualisiert.",
+						"Invalid timestamp for the latest grid operator transmission; gateway.lastMarketTransmission was not updated.",
 					);
 				} else {
 					await this.setStateAsync("gateway.lastMarketTransmission", lastTransmissionTimestamp, true);
 				}
 			}
 		} catch (error: unknown) {
-			this.log.debug(`Log-Abfrage übersprungen: ${getErrorMessage(error)}`);
+			this.log.debug(`Log request skipped: ${getErrorMessage(error)}`);
 		}
 	}
 
@@ -925,7 +1035,7 @@ class Conexa extends utils.Adapter {
 	 */
 	private async discoverUsagePoints(forceLog: boolean): Promise<void> {
 		if (forceLog) {
-			this.log.info("Scanne Gateway nach freigeschalteten Tarifen (user-info)...");
+			this.log.info("Scanning the gateway for activated tariffs (user-info)...");
 		}
 
 		const res = await this.sendConexaRequest({ method: "user-info" });
@@ -957,7 +1067,7 @@ class Conexa extends utils.Adapter {
 					method: "usage-point-info",
 					"usage-point-id": usagePointId,
 				});
-				this.log.debug(`[usage-point-info] Rohdaten für ${usagePointName}: ${JSON.stringify(detailRes)}`);
+				this.log.debug(`[usage-point-info] Raw data for ${usagePointName}: ${JSON.stringify(detailRes)}`);
 				const info = asGatewayRecord(detailRes["usage-point-info"]);
 				const databases = [
 					...asGatewayRecords(info?.databases),
@@ -989,7 +1099,7 @@ class Conexa extends utils.Adapter {
 				}
 			} catch (err: unknown) {
 				this.log.debug(
-					`Detailabfrage usage-point-info für ${usagePointName} lieferte keinen Kanal: ${getErrorMessage(err)}`,
+					`The usage-point-info detail request for ${usagePointName} did not return a channel: ${getErrorMessage(err)}`,
 				);
 			}
 			if (!obis) {
@@ -1023,7 +1133,7 @@ class Conexa extends utils.Adapter {
 		await this.setStateAsync("usagePoints.catalogJson", JSON.stringify(discovered), true);
 		await this.setStateAsync("usagePoints.lastUpdated", this.lastCatalogUpdate, true);
 
-		this.log.info(`${discovered.length} Tarife erfolgreich eingelesen und im Katalog gespeichert.`);
+		this.log.info(`${discovered.length} tariffs successfully read and stored in the catalog.`);
 	}
 
 	/**
@@ -1037,7 +1147,19 @@ class Conexa extends utils.Adapter {
 		await this.setObjectNotExistsAsync(basePath, {
 			type: "channel",
 			common: {
-				name: `${up.usagePointName} (TAF ${up.tafNumber})`,
+				name: {
+					en: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					de: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					ru: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					pt: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					nl: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					fr: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					it: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					es: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					pl: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					uk: `${up.usagePointName} (TAF ${up.tafNumber})`,
+					"zh-cn": `${up.usagePointName} (TAF ${up.tafNumber})`,
+				},
 			},
 			native: {},
 		});
@@ -1050,7 +1172,19 @@ class Conexa extends utils.Adapter {
 		await this.setObjectNotExistsAsync(`${basePath}.meterId`, {
 			type: "state",
 			common: {
-				name: "Meter ID (Zählernummer)",
+				name: {
+					en: "Meter ID (meter number)",
+					de: "Zähler-ID (Zählernummer)",
+					ru: "ID счетчика (номер счетчика)",
+					pt: "ID do contador (número do contador)",
+					nl: "Meter-ID (meternummer)",
+					fr: "ID du compteur (numéro du compteur)",
+					it: "ID contatore (numero contatore)",
+					es: "ID del contador (número de contador)",
+					pl: "ID licznika (numer licznika)",
+					uk: "Ідентифікатор лічильника (номер лічильника)",
+					"zh-cn": "电表 ID（电表编号）",
+				},
 				type: "string",
 				role: "info.serial",
 				read: true,
@@ -1061,23 +1195,92 @@ class Conexa extends utils.Adapter {
 		});
 		await this.setObjectNotExistsAsync(`${basePath}.tafState`, {
 			type: "state",
-			common: { name: "TAF Status", type: "string", role: "info.status", read: true, write: false, def: "" },
+			common: {
+				name: {
+					en: "TAF status",
+					de: "TAF-Status",
+					ru: "Статус TAF",
+					pt: "Estado TAF",
+					nl: "TAF-status",
+					fr: "Statut TAF",
+					it: "Stato TAF",
+					es: "Estado TAF",
+					pl: "Status TAF",
+					uk: "Статус TAF",
+					"zh-cn": "TAF 状态",
+				},
+				type: "string",
+				role: "info.status",
+				read: true,
+				write: false,
+				def: "",
+			},
 			native: {},
 		});
 		await this.setObjectNotExistsAsync(`${basePath}.obis`, {
 			type: "state",
-			common: { name: "OBIS Kennzahl", type: "string", role: "text", read: true, write: false, def: "" },
+			common: {
+				name: {
+					en: "OBIS code",
+					de: "OBIS-Kennzahl",
+					ru: "Код OBIS",
+					pt: "Código OBIS",
+					nl: "OBIS-code",
+					fr: "Code OBIS",
+					it: "Codice OBIS",
+					es: "Código OBIS",
+					pl: "Kod OBIS",
+					uk: "Код OBIS",
+					"zh-cn": "OBIS 代码",
+				},
+				type: "string",
+				role: "text",
+				read: true,
+				write: false,
+				def: "",
+			},
 			native: {},
 		});
 		await this.setObjectNotExistsAsync(`${basePath}.valueRaw`, {
 			type: "state",
-			common: { name: "Rohwert vom Zähler", type: "number", role: "value", read: true, write: false, def: 0 },
+			common: {
+				name: {
+					en: "Raw meter value",
+					de: "Rohwert vom Zähler",
+					ru: "Необработанное значение счетчика",
+					pt: "Valor bruto do contador",
+					nl: "Ruwe meterwaarde",
+					fr: "Valeur brute du compteur",
+					it: "Valore grezzo del contatore",
+					es: "Valor bruto del contador",
+					pl: "Surowa wartość licznika",
+					uk: "Необроблене значення лічильника",
+					"zh-cn": "电表原始值",
+				},
+				type: "number",
+				role: "value",
+				read: true,
+				write: false,
+				def: 0,
+			},
 			native: {},
 		});
 		await this.setObjectNotExistsAsync(`${basePath}.valueWh`, {
 			type: "state",
 			common: {
-				name: "Zählerstand (Wh)",
+				name: {
+					en: "Meter reading (Wh)",
+					de: "Zählerstand (Wh)",
+					ru: "Показание счетчика (Вт·ч)",
+					pt: "Leitura do contador (Wh)",
+					nl: "Meterstand (Wh)",
+					fr: "Index du compteur (Wh)",
+					it: "Lettura del contatore (Wh)",
+					es: "Lectura del contador (Wh)",
+					pl: "Stan licznika (Wh)",
+					uk: "Показання лічильника (Вт·год)",
+					"zh-cn": "电表读数 (Wh)",
+				},
 				type: "number",
 				role: "value.energy",
 				unit: "Wh",
@@ -1090,7 +1293,19 @@ class Conexa extends utils.Adapter {
 		await this.setObjectNotExistsAsync(`${basePath}.valueKWh`, {
 			type: "state",
 			common: {
-				name: "Zählerstand (kWh)",
+				name: {
+					en: "Meter reading (kWh)",
+					de: "Zählerstand (kWh)",
+					ru: "Показание счетчика (кВт·ч)",
+					pt: "Leitura do contador (kWh)",
+					nl: "Meterstand (kWh)",
+					fr: "Index du compteur (kWh)",
+					it: "Lettura del contatore (kWh)",
+					es: "Lectura del contador (kWh)",
+					pl: "Stan licznika (kWh)",
+					uk: "Показання лічильника (кВт·год)",
+					"zh-cn": "电表读数 (kWh)",
+				},
 				type: "number",
 				role: "value.energy",
 				unit: "kWh",
@@ -1103,7 +1318,19 @@ class Conexa extends utils.Adapter {
 		await this.setObjectNotExistsAsync(`${basePath}.deltaWh`, {
 			type: "state",
 			common: {
-				name: "Verbrauch letztes Intervall (Wh)",
+				name: {
+					en: "Consumption last interval (Wh)",
+					de: "Verbrauch letztes Intervall (Wh)",
+					ru: "Расход за последний интервал (Вт·ч)",
+					pt: "Consumo no último intervalo (Wh)",
+					nl: "Verbruik laatste interval (Wh)",
+					fr: "Consommation du dernier intervalle (Wh)",
+					it: "Consumo dell'ultimo intervallo (Wh)",
+					es: "Consumo del último intervalo (Wh)",
+					pl: "Zużycie w ostatnim przedziale (Wh)",
+					uk: "Споживання за останній інтервал (Вт·год)",
+					"zh-cn": "上一间隔耗电量 (Wh)",
+				},
 				type: "number",
 				role: "value.energy",
 				unit: "Wh",
@@ -1116,7 +1343,19 @@ class Conexa extends utils.Adapter {
 		await this.setObjectNotExistsAsync(`${basePath}.averagePowerW`, {
 			type: "state",
 			common: {
-				name: "Durchschnittsleistung letztes Intervall (W)",
+				name: {
+					en: "Average power last interval (W)",
+					de: "Durchschnittsleistung letztes Intervall (W)",
+					ru: "Средняя мощность за последний интервал (Вт)",
+					pt: "Potência média no último intervalo (W)",
+					nl: "Gemiddeld vermogen laatste interval (W)",
+					fr: "Puissance moyenne du dernier intervalle (W)",
+					it: "Potenza media dell'ultimo intervallo (W)",
+					es: "Potencia media del último intervalo (W)",
+					pl: "Średnia moc w ostatnim przedziale (W)",
+					uk: "Середня потужність за останній інтервал (Вт)",
+					"zh-cn": "上一间隔平均功率 (W)",
+				},
 				type: "number",
 				role: "value.power",
 				unit: "W",
@@ -1129,7 +1368,19 @@ class Conexa extends utils.Adapter {
 		await this.setObjectNotExistsAsync(`${basePath}.captureTime`, {
 			type: "state",
 			common: {
-				name: "Zeitpunkt der Erfassung",
+				name: {
+					en: "Capture timestamp",
+					de: "Zeitpunkt der Erfassung",
+					ru: "Время снятия показаний",
+					pt: "Data e hora da captura",
+					nl: "Tijdstempel van opname",
+					fr: "Horodatage de la mesure",
+					it: "Data e ora di acquisizione",
+					es: "Marca de tiempo de captura",
+					pl: "Czas pobrania pomiaru",
+					uk: "Час отримання показань",
+					"zh-cn": "采集时间戳",
+				},
 				type: "string",
 				role: "date",
 				read: true,
@@ -1141,7 +1392,19 @@ class Conexa extends utils.Adapter {
 		await this.setObjectNotExistsAsync(`${basePath}.historyJson`, {
 			type: "state",
 			common: {
-				name: "Historie / Lastgang (JSON)",
+				name: {
+					en: "History / load profile (JSON)",
+					de: "Historie / Lastgang (JSON)",
+					ru: "История / профиль нагрузки (JSON)",
+					pt: "Histórico / curva de carga (JSON)",
+					nl: "Geschiedenis / belastingsprofiel (JSON)",
+					fr: "Historique / courbe de charge (JSON)",
+					it: "Cronologia / profilo di carico (JSON)",
+					es: "Historial / perfil de carga (JSON)",
+					pl: "Historia / profil obciążenia (JSON)",
+					uk: "Історія / профіль навантаження (JSON)",
+					"zh-cn": "历史记录 / 负荷曲线 (JSON)",
+				},
 				type: "string",
 				role: "json",
 				read: true,
@@ -1277,20 +1540,22 @@ class Conexa extends utils.Adapter {
 				};
 
 				try {
-					this.log.debug(`[readings] Sende Payload für ${up.usagePointName}: ${JSON.stringify(payload)}`);
+					this.log.debug(`[readings] Sending payload for ${up.usagePointName}: ${JSON.stringify(payload)}`);
 					res = await this.sendConexaRequest(payload);
 				} catch (error) {
 					if (!fetchFullHistory || !/\b400\b/.test(error instanceof Error ? error.message : String(error))) {
 						throw error;
 					}
 					this.log.warn(
-						`Vollhistorie für Tarif ${up.usagePointName} mit HTTP 400 abgelehnt; frage stattdessen den letzten Messwert ab.`,
+						`Full history for tariff ${up.usagePointName} was rejected with HTTP 400; requesting the latest reading instead.`,
 					);
 					usedFullHistory = false;
 					delete payload["from-time"];
 					payload["last-reading"] = true;
 					try {
-						this.log.debug(`[readings] Sende Payload für ${up.usagePointName}: ${JSON.stringify(payload)}`);
+						this.log.debug(
+							`[readings] Sending payload for ${up.usagePointName}: ${JSON.stringify(payload)}`,
+						);
 						res = await this.sendConexaRequest(payload);
 					} catch (fallbackError) {
 						if (
@@ -1306,7 +1571,7 @@ class Conexa extends utils.Adapter {
 
 				const shouldLogRaw = usagePointIndex === 0 && !this.readingsRawLogged;
 				if (shouldLogRaw) {
-					this.log.debug(`[readings] Rohdaten für ${up.usagePointName}: ${JSON.stringify(res)}`);
+					this.log.debug(`[readings] Raw data for ${up.usagePointName}: ${JSON.stringify(res)}`);
 					this.readingsRawLogged = true;
 				}
 
@@ -1339,7 +1604,7 @@ class Conexa extends utils.Adapter {
 
 					for (const fallbackPayload of fallbackPayloads) {
 						this.log.debug(
-							`[readings] Sende Payload für ${up.usagePointName}: ${JSON.stringify(fallbackPayload)}`,
+							`[readings] Sending payload for ${up.usagePointName}: ${JSON.stringify(fallbackPayload)}`,
 						);
 						try {
 							const fallbackResponse = await this.sendConexaRequest(fallbackPayload);
@@ -1353,7 +1618,7 @@ class Conexa extends utils.Adapter {
 							}
 						} catch (error) {
 							this.log.debug(
-								`[readings] Fallback für ${up.usagePointName} fehlgeschlagen: ${
+								`[readings] Fallback for ${up.usagePointName} failed: ${
 									error instanceof Error ? error.message : String(error)
 								}`,
 							);
@@ -1363,10 +1628,10 @@ class Conexa extends utils.Adapter {
 
 				if (readingsList.length === 0) {
 					if (!shouldLogRaw) {
-						this.log.debug(`[readings] Rohdaten für ${up.usagePointName}: ${JSON.stringify(res)}`);
+						this.log.debug(`[readings] Raw data for ${up.usagePointName}: ${JSON.stringify(res)}`);
 					}
 					this.log.warn(
-						`Keine Messwerte in readings-Antwort für ${up.usagePointName} gefunden. JSON-Struktur: ${JSON.stringify(res).slice(0, 500)}`,
+						`No readings found in the readings response for ${up.usagePointName}. JSON structure: ${JSON.stringify(res).slice(0, 500)}`,
 					);
 					continue;
 				}
@@ -1472,8 +1737,8 @@ class Conexa extends utils.Adapter {
 			} catch (error: unknown) {
 				const isBadRequest = /\b400\b/.test(error instanceof Error ? error.message : String(error));
 				this.log.warn(
-					`Abruf für Tarif ${up.usagePointName} fehlgeschlagen (${getErrorMessage(error)})${
-						isBadRequest ? "." : ". Markiere Katalog zur Aktualisierung."
+					`Retrieval for tariff ${up.usagePointName} failed (${getErrorMessage(error)})${
+						isBadRequest ? "." : ". Marking the catalog for refresh."
 					}`,
 				);
 				if (!isBadRequest) {
@@ -1487,7 +1752,7 @@ class Conexa extends utils.Adapter {
 			try {
 				await this.discoverUsagePoints(true);
 			} catch (err: unknown) {
-				this.log.error(`Automatische Katalog-Aktualisierung fehlgeschlagen: ${getErrorMessage(err)}`);
+				this.log.error(`Automatic catalog refresh failed: ${getErrorMessage(err)}`);
 			}
 		}
 		return hasNewReading;
@@ -1505,10 +1770,10 @@ class Conexa extends utils.Adapter {
 				const description = toText(st.description);
 				await this.setStateAsync("gateway.selfTestResult", result, true);
 				await this.setStateAsync("gateway.selfTestDescription", description, true);
-				this.log.info(`Selbsttest gestartet: ${description} (Code: ${result})`);
+				this.log.info(`Self-test started: ${description} (code: ${result})`);
 			}
 		} catch (error: unknown) {
-			this.log.error(`Fehler beim Starten des Selbsttests: ${getErrorMessage(error)}`);
+			this.log.error(`Error starting the self-test: ${getErrorMessage(error)}`);
 		}
 	}
 
@@ -1527,7 +1792,7 @@ class Conexa extends utils.Adapter {
 			}
 			this.httpsAgent.destroy();
 		} catch (error: unknown) {
-			this.log.error(`Fehler beim Aufräumen des Adapters: ${getErrorMessage(error)}`);
+			this.log.error(`Error cleaning up the adapter: ${getErrorMessage(error)}`);
 		} finally {
 			callback();
 		}
