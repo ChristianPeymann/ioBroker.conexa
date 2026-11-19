@@ -80,32 +80,6 @@
 				"pl": "Oczyszczono sekcję wiadomości i rozwiązano wszystkie problemy z sprawdzaniem repozytorium",
 				"uk": "Очистив розділ новин та вирішено всі проблеми перевірки сховища",
 				"zh-cn": "清理了新闻栏目并解决了所有存储库检查器问题"
-			},
-			"0.1.4": {
-				"en": "Fixed repository checker issues and resized logo to 512x512",
-				"de": "Repository-Checker behoben und Logo auf 512 x 512 geändert",
-				"ru": "Исправлены проблемы с проверкой репозитория и изменен размер логотипа до 512x512",
-				"pt": "Correção de erros no repositório e redimensionou o logotipo para 512x512",
-				"nl": "Problemen met de controle van de repository opgelost en het logo aangepast naar 512 x 512",
-				"fr": "Correction de problèmes de dépôt et redimensionnement du logo en 512 x 512",
-				"it": "Risolti problemi con Repository Checker e logo ridimensionato a 512x512",
-				"es": "Se corrigieron problemas con el comprobador de repositorios y se redimensionó el logo a 512 x 512",
-				"pl": "Naprawiono problemy z sprawdzaniem repozytorium i zmieniono rozmiar logo do 512x512",
-				"uk": "Виправлені проблеми перевірки сховища та змінений розмір логотипу до 512x512",
-				"zh-cn": "修复了存储库检查器问题并将徽标大小调整为 512x512"
-			},
-			"0.1.3": {
-				"en": "Optimized adapter icon size",
-				"de": "Optimierte Adapter-Symbolgröße",
-				"ru": "Оптимизированный размер значка адаптера",
-				"pt": "Ícone de adaptador otimizado",
-				"nl": "Geoptimaliseerde grootte van het adapterpictogram",
-				"fr": "Taille d'icône optimisée",
-				"it": "Icona adattatore ottimizzata",
-				"es": "Tamaño de icono de adaptador",
-				"pl": "Zoptymalizowany rozmiar ikony adaptera",
-				"uk": "Оптимізований розмір значка адаптера",
-				"zh-cn": "优化了适配器图标大小"
 			}
 		},
 		"titleLang": {
