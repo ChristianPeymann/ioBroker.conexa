@@ -59,6 +59,8 @@ The adapter creates states below `conexa.0`:
 	### **WORK IN PROGRESS**
 
 -->
+### **WORK IN PROGRESS**
+
 ### 0.1.12 (2026-11-19)
 
 - (ChristianPeymann) Removed old news entries from io-package.json
