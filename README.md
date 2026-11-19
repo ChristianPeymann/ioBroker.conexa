@@ -59,8 +59,7 @@ The adapter creates states below `conexa.0`:
 	### **WORK IN PROGRESS**
 
 -->
-
-### **WORK IN PROGRESS**
+### 0.1.12 (2026-11-19)
 
 - (ChristianPeymann) Removed old news entries from io-package.json
 
@@ -85,18 +84,6 @@ The adapter creates states below `conexa.0`:
 ### 0.1.8 (2026-10-26)
 
 - (ChristianPeymann) Fixed state roles and added missing translations for object definitions
-
-### 0.1.6 (2026-10-26)
-
-- (ChristianPeymann) Updated required Node.js version to >= 24
-
-### 0.1.5 (2026-10-25)
-
-- (ChristianPeymann) Cleaned up news section and resolved all repository checker issues
-
-### 0.1.4 (2026-10-25)
-
-- (ChristianPeymann) Fixed repository checker issues and resized logo to 512x512
 
 [Older changelog entries](CHANGELOG_OLD.md)
 
