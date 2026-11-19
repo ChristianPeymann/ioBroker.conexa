@@ -59,8 +59,6 @@ The adapter creates states below `conexa.0`:
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
-
 ### 0.1.11 (2026-11-19)
 
 - (ChristianPeymann) Prevented case-insensitive collisions between dynamic usage point IDs
