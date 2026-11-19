@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "conexa",
-		"version": "0.1.10",
+		"version": "0.1.11",
 		"news": {
+			"0.1.11": {
+				"en": "Fixed dynamic object naming collisions, updated translations, and added polling interval configuration",
+				"de": "Kollisionen bei dynamischen Objektnamen behoben, Übersetzungen aktualisiert und Polling-Intervall-Konfiguration ergänzt",
+				"ru": "Исправлены конфликты имен динамических объектов, обновлены переводы и добавлена настройка интервала опроса",
+				"pt": "Corrigidas colisões de nomes de objetos dinâmicos, traduções atualizadas e adicionada configuração do intervalo de consulta",
+				"nl": "Naamconflicten van dynamische objecten opgelost, vertalingen bijgewerkt en pollingintervalconfiguratie toegevoegd",
+				"fr": "Correction des conflits de noms d'objets dynamiques, mises à jour des traductions et ajout du réglage de l'intervalle d'interrogation",
+				"it": "Risolte le collisioni dei nomi degli oggetti dinamici, aggiornate le traduzioni e aggiunta la configurazione dell'intervallo di polling",
+				"es": "Corregidas las colisiones de nombres de objetos dinámicos, actualizadas las traducciones y añadida la configuración del intervalo de consulta",
+				"pl": "Naprawiono kolizje nazw obiektów dynamicznych, zaktualizowano tłumaczenia i dodano konfigurację interwału odpytywania",
+				"uk": "Виправлено конфлікти назв динамічних об'єктів, оновлено переклади та додано налаштування інтервалу опитування",
+				"zh-cn": "修复了动态对象名称冲突，更新了翻译，并添加了轮询间隔配置"
+			},
 			"0.1.10": {
 				"en": "Translated logs, added 11-language i18n for dynamic objects, and improved documentation",
 				"de": "Log-Meldungen auf Englisch übersetzt, 11-Sprachen-i18n für dynamische Objekte ergänzt und Dokumentation verbessert",
@@ -14,7 +27,7 @@
 				"es": "Registros traducidos, i18n de 11 idiomas añadida para objetos dinámicos y documentación mejorada",
 				"pl": "Przetłumaczono logi, dodano 11-języczne i18n dla obiektów dynamicznych i ulepszono dokumentację",
 				"uk": "Перекладено логи, додано 11-мовну i18n для динамічних об'єктів та покращено документацію",
-				"zh-cn": "已翻译日志，为动态 11-object 添加了 11 种语言的 i18n 支持，并改进了文档"
+				"zh-cn": "已翻译日志，为动态对象添加了 11 种语言的 i18n 支持，并改进了文档"
 			},
 			"0.1.9": {
 				"en": "Adjusted minimum Node.js version to 22",

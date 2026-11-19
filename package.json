@@ -1,6 +1,6 @@
 {
   "name": "iobroker.conexa",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Reads meter readings and tariff profiles (TAF) locally via the M2M HAN interface.",
   "author": {
     "name": "Christian Peymann",

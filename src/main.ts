@@ -260,7 +260,7 @@ class Conexa extends utils.Adapter {
 	 */
 	private async sendConexaRequest(payload: GatewayRequest): Promise<GatewayRecord> {
 		const startTime = Date.now();
-		let requestStep = "Schritt 1 (Initial-Request/Challenge)";
+		let requestStep = "Step 1 (initial request/challenge)";
 		const method = toText(payload.method);
 		try {
 			let requestUrl = new URL(this.baseUrl);
@@ -287,10 +287,10 @@ class Conexa extends utils.Adapter {
 					`[API] Gateway sent redirect (${response.statusCode}) to Location: ${response.location}`,
 				);
 				if (!response.location) {
-					throw new Error(`Gateway-Redirect (${response.statusCode}) enthält keinen Location-Header.`);
+					throw new Error(`Gateway redirect (${response.statusCode}) does not contain a Location header.`);
 				}
 				if (++redirectCount > maxRedirects) {
-					throw new Error(`Zu viele Gateway-Redirects (mehr als ${maxRedirects}).`);
+					throw new Error(`Too many gateway redirects (more than ${maxRedirects}).`);
 				}
 				requestUrl = new URL(response.location, requestUrl);
 				this.baseUrl = requestUrl.toString();
@@ -304,7 +304,7 @@ class Conexa extends utils.Adapter {
 
 			if (response.statusCode === 403) {
 				throw new Error(
-					`Zugriff verweigert (403 Forbidden). Der konfigurierte Benutzer hat keine Berechtigung für die API-Methode "${method}".`,
+					`Access denied (403 Forbidden). The configured user does not have permission for API method "${method}".`,
 				);
 			}
 
@@ -316,8 +316,8 @@ class Conexa extends utils.Adapter {
 
 			if (response.statusCode !== 401 || !response.wwwAuthenticate?.length) {
 				throw new Error(
-					`Unerwarteter HTTP-Status ${response.statusCode} beim Verbindungsaufbau. Antwort: ${
-						response.body || "Keine Antwort vom Gateway"
+					`Unexpected HTTP status ${response.statusCode} while connecting. Response: ${
+						response.body || "No response from gateway"
 					}`,
 				);
 			}
@@ -327,7 +327,7 @@ class Conexa extends utils.Adapter {
 				`[API] Digest authorization header generated (value will not be logged). Sending authenticated request for "${method}"...`,
 			);
 
-			requestStep = "Schritt 2 (authentifizierter Request)";
+			requestStep = "Step 2 (authenticated request)";
 			const authStartTime = Date.now();
 			let authenticatedResponse = await this.requestConexa(requestUrl, body, authorization);
 			this.log.debug(
@@ -341,11 +341,11 @@ class Conexa extends utils.Adapter {
 				);
 				if (!authenticatedResponse.location) {
 					throw new Error(
-						`Gateway-Redirect (${authenticatedResponse.statusCode}) enthält keinen Location-Header.`,
+						`Gateway redirect (${authenticatedResponse.statusCode}) does not contain a Location header.`,
 					);
 				}
 				if (++redirectCount > maxRedirects) {
-					throw new Error(`Zu viele Gateway-Redirects (mehr als ${maxRedirects}).`);
+					throw new Error(`Too many gateway redirects (more than ${maxRedirects}).`);
 				}
 				requestUrl = new URL(authenticatedResponse.location, requestUrl);
 				this.baseUrl = requestUrl.toString();
@@ -358,20 +358,20 @@ class Conexa extends utils.Adapter {
 
 			if (authenticatedResponse.statusCode === 401) {
 				throw new Error(
-					"Authentifizierung fehlgeschlagen (401 Unauthorized). Bitte überprüfen Sie Benutzername und Passwort in den Adapter-Einstellungen.",
+					"Authentication failed (401 Unauthorized). Please check the username and password in the adapter settings.",
 				);
 			}
 
 			if (authenticatedResponse.statusCode === 403) {
 				throw new Error(
-					`Zugriff verweigert (403 Forbidden). Der konfigurierte Benutzer hat keine Berechtigung für die API-Methode "${method}".`,
+					`Access denied (403 Forbidden). The configured user does not have permission for API method "${method}".`,
 				);
 			}
 
 			if (authenticatedResponse.statusCode < 200 || authenticatedResponse.statusCode >= 300) {
 				throw new Error(
-					`Gateway meldet HTTP-Fehlerstatus ${authenticatedResponse.statusCode}: ${
-						authenticatedResponse.body || "Keine Details"
+					`Gateway reported HTTP error status ${authenticatedResponse.statusCode}: ${
+						authenticatedResponse.body || "No details"
 					}`,
 				);
 			}
@@ -380,7 +380,7 @@ class Conexa extends utils.Adapter {
 		} catch (error) {
 			const message = getErrorMessage(error);
 			this.log.error(`[API Error] Method "${method}" failed (${requestStep}): ${message}`);
-			throw new Error(`API-Fehler (${method}, ${requestStep}): ${message}`);
+			throw new Error(`API error (${method}, ${requestStep}): ${message}`);
 		}
 	}
 
@@ -394,7 +394,7 @@ class Conexa extends utils.Adapter {
 	private parseGatewayResponse(body: string): GatewayRecord {
 		const response: unknown = JSON.parse(body);
 		if (!isGatewayRecord(response)) {
-			throw new Error("Gateway-Antwort ist kein JSON-Objekt.");
+			throw new Error("Gateway response is not a JSON object.");
 		}
 		return response;
 	}
@@ -506,7 +506,7 @@ class Conexa extends utils.Adapter {
 			parsedChallenges.find(challenge => challenge.algorithm === "MD5") ??
 			parsedChallenges.find(challenge => challenge.algorithm === "SHA-256");
 		if (!selectedChallenge) {
-			throw new Error("Keine unterstützte Digest-Challenge (MD5 oder SHA-256) vom Gateway erhalten.");
+			throw new Error("No supported Digest challenge (MD5 or SHA-256) received from the gateway.");
 		}
 
 		const { realm, nonce, qop, opaque } = selectedChallenge.params;
@@ -517,7 +517,7 @@ class Conexa extends utils.Adapter {
 			.map(value => value.trim())
 			.find(value => value.toLowerCase() === "auth");
 		if (qop && !qopAuth) {
-			throw new Error(`Nicht unterstützte Digest-qop: ${qop}`);
+			throw new Error(`Unsupported Digest qop: ${qop}`);
 		}
 
 		const uri = `${requestUrl.pathname}${requestUrl.search}`;
@@ -675,44 +675,25 @@ class Conexa extends utils.Adapter {
 	 * Legt die zusätzlichen Statusdatenpunkte für Übermittlungen und Polling an.
 	 */
 	private async ensureGatewayStatsObjects(): Promise<void> {
-		await this.setObjectNotExistsAsync("gateway", {
-			type: "channel",
-			common: {
-				name: {
-					en: "Gateway",
-					de: "Gateway",
-					ru: "Шлюз",
-					pt: "Gateway",
-					nl: "Gateway",
-					fr: "Passerelle",
-					it: "Gateway",
-					es: "Pasarela",
-					pl: "Bramka",
-					uk: "Шлюз",
-					"zh-cn": "网关",
-				},
-			},
-			native: {},
-		});
+		const marketTransmissionsName: ioBroker.StringOrTranslated = {
+			en: "Transmissions to grid operator",
+			de: "Übermittlungen an Netzbetreiber",
+			ru: "Передачи оператору сетевой системы",
+			pt: "Transmissões para o operador da rede",
+			nl: "Overdracht aan netbeheerder",
+			fr: "Transmissions à l'opérateur réseau",
+			it: "Trasmissioni al gestore di rete",
+			es: "Transmisiones al operador de red",
+			pl: "Przekazywanie do operatora sieci",
+			uk: "Передачі оператору мережі",
+			"zh-cn": "向电网运营商传输",
+		};
 		await this.setObjectNotExistsAsync("gateway.marketTransmissions", {
 			type: "channel",
-			common: {
-				name: {
-					en: "Transmissions to grid operator",
-					de: "Übermittlungen an Netzbetreiber",
-					ru: "Передачи оператору сетевой системы",
-					pt: "Transmissões para o operador da rede",
-					nl: "Overdracht aan netbeheerder",
-					fr: "Transmissions à l'opérateur réseau",
-					it: "Trasmissioni al gestore di rete",
-					es: "Transmisiones al operador de red",
-					pl: "Przekazywanie do operatora sieci",
-					uk: "Передачі оператору мережі",
-					"zh-cn": "向电网运营商传输",
-				},
-			},
+			common: { name: marketTransmissionsName },
 			native: {},
 		});
+		await this.updateObjectName("gateway.marketTransmissions", marketTransmissionsName);
 
 		const states: Array<{
 			id: string;
@@ -862,7 +843,12 @@ class Conexa extends utils.Adapter {
 				},
 				native: {},
 			});
+			await this.updateObjectName(state.id, state.name);
 		}
+	}
+
+	private async updateObjectName(id: string, name: ioBroker.StringOrTranslated): Promise<void> {
+		await this.extendObjectAsync(id, { common: { name } });
 	}
 
 	/**
@@ -1043,6 +1029,7 @@ class Conexa extends utils.Adapter {
 		const rawList = asGatewayRecords(userInfo?.["usage-points"]);
 
 		const discovered: CachedUsagePoint[] = [];
+		const usedCleanIds = new Set<string>();
 
 		for (const item of rawList) {
 			const upId = item["usage-point-id"];
@@ -1054,7 +1041,17 @@ class Conexa extends utils.Adapter {
 			const usagePointName = String(upName);
 
 			// Punkte und Sonderzeichen im Namen durch Unterstriche ersetzen für saubere ioBroker-IDs (z.B. TAF1_1_8_0)
-			const cleanId = usagePointName.replace(/[^a-zA-Z0-9_-]/g, "_");
+			const baseCleanId = usagePointName.replace(/[^a-zA-Z0-9_-]/g, "_");
+			let cleanId = baseCleanId;
+			if (usedCleanIds.has(cleanId.toLowerCase())) {
+				const suffix = usagePointId.replace(/[^a-zA-Z0-9_-]/g, "_") || "usagePoint";
+				cleanId = `${baseCleanId}_${suffix}`;
+				let collisionNumber = 2;
+				while (usedCleanIds.has(cleanId.toLowerCase())) {
+					cleanId = `${baseCleanId}_${suffix}_${collisionNumber++}`;
+				}
+			}
+			usedCleanIds.add(cleanId.toLowerCase());
 
 			let database = "origin";
 			let obis = "";
@@ -1143,35 +1140,55 @@ class Conexa extends utils.Adapter {
 	 */
 	private async ensureUsagePointObjects(up: CachedUsagePoint): Promise<void> {
 		const basePath = `usagePoints.${up.cleanId}`;
-
+		const channelName: ioBroker.StringOrTranslated = {
+			en: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			de: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			ru: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			pt: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			nl: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			fr: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			it: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			es: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			pl: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			uk: `${up.usagePointName} (TAF ${up.tafNumber})`,
+			"zh-cn": `${up.usagePointName} (TAF ${up.tafNumber})`,
+		};
 		await this.setObjectNotExistsAsync(basePath, {
 			type: "channel",
-			common: {
-				name: {
-					en: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					de: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					ru: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					pt: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					nl: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					fr: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					it: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					es: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					pl: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					uk: `${up.usagePointName} (TAF ${up.tafNumber})`,
-					"zh-cn": `${up.usagePointName} (TAF ${up.tafNumber})`,
-				},
-			},
+			common: { name: channelName },
 			native: {},
 		});
+		await this.updateObjectName(basePath, channelName);
 
-		await this.setObjectNotExistsAsync(`${basePath}.usagePointId`, {
-			type: "state",
-			common: { name: "Usage Point ID", type: "string", role: "text", read: true, write: false, def: "" },
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.meterId`, {
-			type: "state",
-			common: {
+		const states: Array<{
+			id: string;
+			name: ioBroker.StringOrTranslated;
+			type: "number" | "string";
+			role: string;
+			unit?: string;
+			def: number | string;
+		}> = [
+			{
+				id: "usagePointId",
+				name: {
+					en: "Usage Point ID",
+					de: "Usage-Point-ID",
+					ru: "Идентификатор точки учета",
+					pt: "ID do ponto de consumo",
+					nl: "Usage Point-ID",
+					fr: "ID du point de comptage",
+					it: "ID del punto di prelievo",
+					es: "ID del punto de suministro",
+					pl: "ID punktu poboru",
+					uk: "Ідентифікатор точки обліку",
+					"zh-cn": "用电点 ID",
+				},
+				type: "string",
+				role: "text",
+				def: "",
+			},
+			{
+				id: "meterId",
 				name: {
 					en: "Meter ID (meter number)",
 					de: "Zähler-ID (Zählernummer)",
@@ -1187,15 +1204,10 @@ class Conexa extends utils.Adapter {
 				},
 				type: "string",
 				role: "info.serial",
-				read: true,
-				write: false,
 				def: "",
 			},
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.tafState`, {
-			type: "state",
-			common: {
+			{
+				id: "tafState",
 				name: {
 					en: "TAF status",
 					de: "TAF-Status",
@@ -1211,15 +1223,10 @@ class Conexa extends utils.Adapter {
 				},
 				type: "string",
 				role: "info.status",
-				read: true,
-				write: false,
 				def: "",
 			},
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.obis`, {
-			type: "state",
-			common: {
+			{
+				id: "obis",
 				name: {
 					en: "OBIS code",
 					de: "OBIS-Kennzahl",
@@ -1235,15 +1242,10 @@ class Conexa extends utils.Adapter {
 				},
 				type: "string",
 				role: "text",
-				read: true,
-				write: false,
 				def: "",
 			},
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.valueRaw`, {
-			type: "state",
-			common: {
+			{
+				id: "valueRaw",
 				name: {
 					en: "Raw meter value",
 					de: "Rohwert vom Zähler",
@@ -1259,15 +1261,10 @@ class Conexa extends utils.Adapter {
 				},
 				type: "number",
 				role: "value",
-				read: true,
-				write: false,
 				def: 0,
 			},
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.valueWh`, {
-			type: "state",
-			common: {
+			{
+				id: "valueWh",
 				name: {
 					en: "Meter reading (Wh)",
 					de: "Zählerstand (Wh)",
@@ -1284,15 +1281,10 @@ class Conexa extends utils.Adapter {
 				type: "number",
 				role: "value.energy",
 				unit: "Wh",
-				read: true,
-				write: false,
 				def: 0,
 			},
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.valueKWh`, {
-			type: "state",
-			common: {
+			{
+				id: "valueKWh",
 				name: {
 					en: "Meter reading (kWh)",
 					de: "Zählerstand (kWh)",
@@ -1309,15 +1301,10 @@ class Conexa extends utils.Adapter {
 				type: "number",
 				role: "value.energy",
 				unit: "kWh",
-				read: true,
-				write: false,
 				def: 0,
 			},
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.deltaWh`, {
-			type: "state",
-			common: {
+			{
+				id: "deltaWh",
 				name: {
 					en: "Consumption last interval (Wh)",
 					de: "Verbrauch letztes Intervall (Wh)",
@@ -1334,15 +1321,10 @@ class Conexa extends utils.Adapter {
 				type: "number",
 				role: "value.energy",
 				unit: "Wh",
-				read: true,
-				write: false,
 				def: 0,
 			},
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.averagePowerW`, {
-			type: "state",
-			common: {
+			{
+				id: "averagePowerW",
 				name: {
 					en: "Average power last interval (W)",
 					de: "Durchschnittsleistung letztes Intervall (W)",
@@ -1359,15 +1341,10 @@ class Conexa extends utils.Adapter {
 				type: "number",
 				role: "value.power",
 				unit: "W",
-				read: true,
-				write: false,
 				def: 0,
 			},
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.captureTime`, {
-			type: "state",
-			common: {
+			{
+				id: "captureTime",
 				name: {
 					en: "Capture timestamp",
 					de: "Zeitpunkt der Erfassung",
@@ -1383,15 +1360,10 @@ class Conexa extends utils.Adapter {
 				},
 				type: "string",
 				role: "date",
-				read: true,
-				write: false,
 				def: "",
 			},
-			native: {},
-		});
-		await this.setObjectNotExistsAsync(`${basePath}.historyJson`, {
-			type: "state",
-			common: {
+			{
+				id: "historyJson",
 				name: {
 					en: "History / load profile (JSON)",
 					de: "Historie / Lastgang (JSON)",
@@ -1407,12 +1379,27 @@ class Conexa extends utils.Adapter {
 				},
 				type: "string",
 				role: "json",
-				read: true,
-				write: false,
 				def: "[]",
 			},
-			native: {},
-		});
+		];
+
+		for (const state of states) {
+			const id = `${basePath}.${state.id}`;
+			await this.setObjectNotExistsAsync(id, {
+				type: "state",
+				common: {
+					name: state.name,
+					type: state.type,
+					role: state.role,
+					...(state.unit ? { unit: state.unit } : {}),
+					read: true,
+					write: false,
+					def: state.def,
+				},
+				native: {},
+			});
+			await this.updateObjectName(id, state.name);
+		}
 
 		// Stammdaten direkt schreiben
 		await this.setStateAsync(`${basePath}.usagePointId`, up.usagePointId, true);

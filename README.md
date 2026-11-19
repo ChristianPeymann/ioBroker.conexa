@@ -61,6 +61,13 @@ The adapter creates states below `conexa.0`:
 
 ### **WORK IN PROGRESS**
 
+### 0.1.11 (2026-11-19)
+
+- (ChristianPeymann) Prevented case-insensitive collisions between dynamic usage point IDs
+- (ChristianPeymann) Updated existing dynamic object names with 11-language translations
+- (ChristianPeymann) Added configurable polling interval and translated its label
+- (ChristianPeymann) Translated remaining error messages and removed unused template configuration
+
 ### 0.1.10 (2026-11-18)
 
 - (ChristianPeymann) Translated all log messages to English
@@ -77,8 +84,6 @@ The adapter creates states below `conexa.0`:
 - (ChristianPeymann) Fixed state roles and added missing translations for object definitions
 
 ### 0.1.6 (2026-10-26)
-
-- (ChristianPeymann) Updated required Node.js version to >= 24
 
 - (ChristianPeymann) Updated required Node.js version to >= 24
 
